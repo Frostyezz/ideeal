@@ -13,7 +13,7 @@ import Upload from "../components/Upload";
 
 const SignUpS3 = ({ error, id }) => {
   return (
-    <div className="lg:w-1/2 w-full h-2/3 bg-white p-5">
+    <div className="lg:w-1/2 w-full h-2/3 bg-white p-5 animate__animated animate__slideInLeft">
       <div className="h-1/3 flex flex-col justify-center border-b-2 border-t-blue items-center text-center">
         <h1 className="text-7xl font-bold border-2 rounded-full px-4 border-darkBlue mb-3">
           3

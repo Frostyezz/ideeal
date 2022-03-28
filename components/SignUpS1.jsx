@@ -7,11 +7,12 @@ import {
   Input,
   Button,
   AlertIcon,
+  CircularProgress,
 } from "@chakra-ui/react";
 
-const SignUpS1 = ({ error, sendCredentials }) => {
+const SignUpS1 = ({ error, sendCredentials, loading }) => {
   return (
-    <div className="lg:w-1/2 w-full h-full bg-white p-5">
+    <div className="lg:w-1/2 w-full h-full bg-white p-5 animate__animated animate__slideInLeft">
       <div className="h-1/3 flex flex-col justify-center border-b-2 border-t-blue items-center text-center">
         <h1 className="text-7xl font-bold border-2 rounded-full px-6 border-darkBlue mb-3">
           1
@@ -60,9 +61,15 @@ const SignUpS1 = ({ error, sendCredentials }) => {
               id="confirm"
               name="confirm"
             />
-            <Button className="w-full mt-5 shadow" type="submit">
-              Mai departe
-            </Button>
+            {loading ? (
+              <Button isDisabled className="w-full mt-5 shadow">
+                <CircularProgress size="30px" isIndeterminate />
+              </Button>
+            ) : (
+              <Button className="w-full mt-5 shadow" type="submit">
+                Mai departe
+              </Button>
+            )}
           </form>
         </FormControl>
       </div>

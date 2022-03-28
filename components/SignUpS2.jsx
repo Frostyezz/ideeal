@@ -9,6 +9,7 @@ import {
   Input,
   Button,
   AlertIcon,
+  CircularProgress,
 } from "@chakra-ui/react";
 
 import axios from "axios";
@@ -22,7 +23,7 @@ const renderer = ({ minutes, seconds, completed }) => {
     );
   } else return <></>;
 };
-const SignUpS2 = ({ error, verifyToken, id, setError }) => {
+const SignUpS2 = ({ error, verifyToken, id, setError, loading }) => {
   const [cooldown, setCooldown] = useState(false);
 
   const resendToken = async () => {
@@ -38,7 +39,7 @@ const SignUpS2 = ({ error, verifyToken, id, setError }) => {
   };
 
   return (
-    <div className="lg:w-1/2 w-full h-full bg-white p-5">
+    <div className="lg:w-1/2 w-full h-full bg-white p-5 animate__animated animate__slideInLeft">
       <div className="h-1/3 flex flex-col justify-center border-b-2 border-t-blue items-center text-center">
         <h1 className="text-7xl font-bold border-2 rounded-full px-6 py-2 border-darkBlue mb-3">
           2
@@ -75,9 +76,15 @@ const SignUpS2 = ({ error, verifyToken, id, setError }) => {
               id="token"
               name="token"
             />
-            <Button className="w-full mt-5 shadow" type="submit">
-              Confirmă
-            </Button>
+            {loading ? (
+              <Button isDisabled className="w-full mt-5 shadow">
+                <CircularProgress size="30px" isIndeterminate />
+              </Button>
+            ) : (
+              <Button className="w-full mt-5 shadow" type="submit">
+                Confirma
+              </Button>
+            )}
             {cooldown ? (
               <Countdown date={Date.now() + 120000} renderer={renderer} />
             ) : (

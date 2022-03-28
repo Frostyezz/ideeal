@@ -16,14 +16,17 @@ import SignUpS3 from "../../components/SignUpS3";
 const SignUp = () => {
   const [error, setError] = useState(null);
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [id, setId] = useState(null);
 
   const verifyToken = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError(null);
     const { data } = await axios.put("/api/verifyEmail", {
       token: e.target.token.value,
     });
+    setLoading(false);
     if (data.status === "SUCCESS") {
       setStep(step + 1);
     } else if (data.status === "FAILED")
@@ -33,6 +36,7 @@ const SignUp = () => {
 
   const sendCredentials = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError(null);
     const fields = e.target;
     if (fields.confirm.value !== fields.password.value) {
@@ -48,6 +52,7 @@ const SignUp = () => {
       password: fields.password.value,
     };
     const { data } = await axios.post("/api/verifyEmail", info);
+    setLoading(false);
     if (data.status === "SUCCESS") {
       setId(data.id);
       setStep(step + 1);
@@ -102,10 +107,15 @@ const SignUp = () => {
         </Swiper>
       </div>
       {step === 1 && (
-        <SignUpS1 error={error} sendCredentials={sendCredentials} />
+        <SignUpS1
+          error={error}
+          sendCredentials={sendCredentials}
+          loading={loading}
+        />
       )}
       {step === 2 && (
         <SignUpS2
+          loading={loading}
           error={error}
           id={id}
           verifyToken={verifyToken}
