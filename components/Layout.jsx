@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Navbar showNav={() => showNav(!nav)} />
-      {nav && <NavPopUp />}
+      {nav && <NavPopUp showNav={() => showNav(!nav)} />}
       {children}
     </>
   );

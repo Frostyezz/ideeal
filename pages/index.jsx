@@ -21,7 +21,7 @@ export default function Home() {
         </h2>
         <Link href="/signup">
           <a className="bg-orange rounded hover:-translate-y-1 transition duration-500 text-white w-max p-3 mt-3 mx-auto shadow-shadow_1">
-            înregistrează-te
+            Înregistrează-te
           </a>
         </Link>
         <Link href="/signin">

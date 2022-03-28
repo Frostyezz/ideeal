@@ -6,10 +6,18 @@
 
 html,
 body {
-  background-color: #e0fbfc;
+  background-color: #98c1d9;
   padding: 0;
   margin: 0;
   font-family: "Poppins", sans-serif !important;
+}
+
+.swiper-pagination-bullet {
+  background-color: #ffffff !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #ee6c4d !important;
 }
 
 a {

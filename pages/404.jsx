@@ -17,7 +17,7 @@ const NotFound = () => {
           fost ștearsă ori este temporar dezactivată.
         </h2>
         <Link href="/">
-          <a className="p-3 bg-blue w-48 mx-auto rounded mt-5 text-darkBlue font-bold">
+          <a className="p-3 bg-blue w-48 mx-auto rounded mt-5 text-darkBlue font-bold hover:-translate-y-1 transition duration-500">
             ÎNAPOI ACASĂ
           </a>
         </Link>
