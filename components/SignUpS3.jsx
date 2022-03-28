@@ -20,7 +20,7 @@ const SignUpS3 = ({ error, id }) => {
         </h1>
         <h2>Introduceți infromațiile personale</h2>
       </div>
-      <div className="h-2/3 h-max flex items-center mt-5">
+      <div className="h-100 flex items-center mt-5">
         <FormControl className="2xl:px-48 ">
           <form onSubmit={(e) => {}}>
             {error && (
@@ -34,9 +34,7 @@ const SignUpS3 = ({ error, id }) => {
             )}
             <div className="flex flex-col lg:flex-row mb-5">
               <div className="lg:w-1/2 mr-3">
-                <FormLabel className="mt-5" htmlFor="last">
-                  Nume
-                </FormLabel>
+                <FormLabel htmlFor="last">Nume</FormLabel>
                 <Input
                   className="border-blue"
                   isRequired

@@ -101,7 +101,7 @@ const SignUp = () => {
           </SwiperSlide>
         </Swiper>
       </div>
-      {step === 3 && (
+      {step === 1 && (
         <SignUpS1 error={error} sendCredentials={sendCredentials} />
       )}
       {step === 2 && (
@@ -112,7 +112,7 @@ const SignUp = () => {
           setError={setError}
         />
       )}
-      {step === 1 && <SignUpS3 error={error} id={id} />}
+      {step === 3 && <SignUpS3 error={error} id={id} />}
     </div>
   );
 };
