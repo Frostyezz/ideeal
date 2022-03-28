@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+
+import axios from "axios";
 
 import Image from "next/image";
 
@@ -6,17 +8,58 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper";
-import {
-  FormLabel,
-  FormErrorMessage,
-  FormControl,
-  Input,
-  Button,
-} from "@chakra-ui/react";
+
+import SignUpS1 from "../../components/SignUpS1";
+import SignUpS2 from "../../components/SignUpS2";
+import SignUpS3 from "../../components/SignUpS3";
 
 const SignUp = () => {
+  const [error, setError] = useState(null);
+  const [step, setStep] = useState(1);
+  const [id, setId] = useState(null);
+
+  const verifyToken = async (e) => {
+    e.preventDefault();
+    setError(null);
+    const { data } = await axios.put("/api/verifyEmail", {
+      token: e.target.token.value,
+    });
+    if (data.status === "SUCCESS") {
+      setStep(step + 1);
+    } else if (data.status === "FAILED")
+      setError("Ați introdus un cod greșit. Încercați din nou!");
+    else setError("A apărut o eroare. Vă rugam încercați din nou mai târziu!");
+  };
+
+  const sendCredentials = async (e) => {
+    e.preventDefault();
+    setError(null);
+    const fields = e.target;
+    if (fields.confirm.value !== fields.password.value) {
+      setError("Parolele nu se potrivesc! Încercați din nou.");
+      return;
+    }
+    if (fields.password.value.length < 6) {
+      setError("Parola trebuie să conțină minim 6 caractere!");
+      return;
+    }
+    const info = {
+      email: fields.email.value,
+      password: fields.password.value,
+    };
+    const { data } = await axios.post("/api/verifyEmail", info);
+    if (data.status === "SUCCESS") {
+      setId(data.id);
+      setStep(step + 1);
+    } else if (data.status === "DUPLICATED")
+      setError(
+        "Această adresă de email este deja folosită. Vă rugăm să introduceți alta!"
+      );
+    else setError("A apărut o eroare. Vă rugam încercați din nou mai târziu!");
+  };
+
   return (
-    <div className="w-screen h-screen bg-blue flex flex-col lg:flex-row justify-center items-center">
+    <div className="w-screen bg-white h-screen w-content bg-blue flex flex-col lg:flex-row justify-center items-center">
       <div className="bg-white lg:h-full h-1/2 w-full flex lg:w-1/2">
         <Swiper
           spaceBetween={30}
@@ -52,59 +95,24 @@ const SignUp = () => {
             <Image src="/city2.jpg" layout="fill" objectFit="cover" />
             <div className=" w-full h-full relative text-center flex bg-black bg-opacity-30">
               <p className="mt-auto w-full mb-10 text-white">
-                Idee cu idee, împreuna putem clădi lumea perfectă.
+                Idee cu idee, împreună putem clădi lumea perfectă!
               </p>
             </div>
           </SwiperSlide>
         </Swiper>
       </div>
-      <div className="lg:w-1/2 w-full h-full bg-white p-5">
-        <div className="h-1/3 flex flex-col justify-center border-b-2 border-t-blue items-center text-center">
-          <h1 className="text-7xl font-bold border-2 rounded-full px-6 border-darkBlue mb-3">
-            1
-          </h1>
-          <h2>Introduceți credențialele pentru noul cont!</h2>
-        </div>
-        <div className="h-2/3 flex items-center">
-          <FormControl className="2xl:px-48">
-            <form>
-              <FormLabel className="mt-5" htmlFor="email">
-                Adresă de email
-              </FormLabel>
-              <Input
-                className="border-blue"
-                isRequired
-                type="email"
-                id="email"
-                name="email"
-              />
-              <FormLabel className="mt-5" htmlFor="password">
-                Parolă
-              </FormLabel>
-              <Input
-                className="border-blue"
-                isRequired
-                type="password"
-                id="password"
-                name="password"
-              />
-              <FormLabel className="mt-5" htmlFor="confirm">
-                Confirmare parolă
-              </FormLabel>
-              <Input
-                className="border-blue"
-                isRequired
-                type="password"
-                id="confirm"
-                name="confirm"
-              />
-              <Button className="w-full mt-5 shadow" type="submit">
-                Submit
-              </Button>
-            </form>
-          </FormControl>
-        </div>
-      </div>
+      {step === 3 && (
+        <SignUpS1 error={error} sendCredentials={sendCredentials} />
+      )}
+      {step === 2 && (
+        <SignUpS2
+          error={error}
+          id={id}
+          verifyToken={verifyToken}
+          setError={setError}
+        />
+      )}
+      {step === 1 && <SignUpS3 error={error} id={id} />}
     </div>
   );
 };
