@@ -2,12 +2,12 @@ import React, { useState } from "react";
 
 import axios from "axios";
 
-import Image from "next/image";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper";
+
+import Image from "next/image";
 
 import SignUpS1 from "../../components/SignUpS1";
 import SignUpS2 from "../../components/SignUpS2";
