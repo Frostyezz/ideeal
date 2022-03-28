@@ -44,9 +44,7 @@ const SignUpS3 = ({ error, id }) => {
                 />
               </div>
               <div className="lg:w-1/2 mr-3">
-                <FormLabel className="mt-5" htmlFor="first">
-                  Prenume
-                </FormLabel>
+                <FormLabel htmlFor="first">Prenume</FormLabel>
                 <Input
                   className="border-blue"
                   isRequired
