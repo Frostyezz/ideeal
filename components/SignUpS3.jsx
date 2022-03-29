@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   FormLabel,
@@ -7,11 +7,35 @@ import {
   Input,
   Button,
   AlertIcon,
+  CircularProgress,
 } from "@chakra-ui/react";
 
 import Upload from "../components/Upload";
+import axios from "axios";
 
-const SignUpS3 = ({ error, id }) => {
+const SignUpS3 = ({ error, setFiles, files, saveUser, loading }) => {
+  const sendIC = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "fiicode");
+    const { data } = await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/auto/upload`,
+      formData
+    );
+    setFiles({ ...files, ic: data.url });
+  };
+
+  const sendProfileImg = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "fiicode");
+    const { data } = await axios.post(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/auto/upload`,
+      formData
+    );
+    setFiles({ ...files, profileImg: data.url });
+  };
+
   return (
     <div className="lg:w-1/2 w-full h-2/3 bg-white p-5 animate__animated animate__slideInLeft">
       <div className="h-1/3 flex flex-col justify-center border-b-2 border-t-blue items-center text-center">
@@ -22,7 +46,7 @@ const SignUpS3 = ({ error, id }) => {
       </div>
       <div className="h-100 flex items-center mt-5">
         <FormControl className="2xl:px-48 ">
-          <form onSubmit={(e) => {}}>
+          <form onSubmit={(e) => saveUser(e)}>
             {error && (
               <Alert
                 status="error"
@@ -54,12 +78,39 @@ const SignUpS3 = ({ error, id }) => {
                 />
               </div>
             </div>
-            <Upload text="Trageți sau încărcați o poza de profil (opțional)" />
+            {files.profileImg ? (
+              <Alert status="success">
+                <AlertIcon className="rounded animate__animated animate__fadeInDown animate__faster" />
+                Imaginea a fost încărcată cu succes!
+              </Alert>
+            ) : (
+              <Upload
+                onFileAccepted={(file) => sendProfileImg(file)}
+                text="Trageți sau încărcați o poza de profil (opțional)"
+              />
+            )}
             <br />
-            <Upload text="Trageți sau încărcați o poza cu buletinul dvs. (obligatoriu)" />
-            <Button className="w-full my-5 shadow " type="submit">
-              Salvează
-            </Button>
+            {files.ic ? (
+              <Alert status="success">
+                <AlertIcon className="rounded animate__animated animate__fadeInDown animate__faster" />
+                Imaginea buletinului a fost încărcată cu succes!
+              </Alert>
+            ) : (
+              <Upload
+                onFileAccepted={(file) => sendIC(file)}
+                text="Trageți sau încărcați o poza cu buletinul dvs. (obligatoriu)"
+              />
+            )}
+
+            {loading ? (
+              <Button isDisabled className="w-full mt-5 shadow">
+                <CircularProgress size="30px" isIndeterminate />
+              </Button>
+            ) : (
+              <Button className="w-full mt-5 shadow" type="submit">
+                Salvează
+              </Button>
+            )}
           </form>
         </FormControl>
       </div>

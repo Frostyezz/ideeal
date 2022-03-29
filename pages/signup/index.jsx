@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 
@@ -12,12 +12,63 @@ import Image from "next/image";
 import SignUpS1 from "../../components/SignUpS1";
 import SignUpS2 from "../../components/SignUpS2";
 import SignUpS3 from "../../components/SignUpS3";
+import SignUpS4 from "../../components/SignUpS4";
 
 const SignUp = () => {
   const [error, setError] = useState(null);
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState(null);
+  const [files, setFiles] = useState({
+    ic: null,
+    profileImg: null,
+  });
+  useEffect(() => {
+    const current = localStorage.getItem("step");
+    if (current) setStep(parseInt(current));
+    const _id = localStorage.getItem("id");
+    if (_id) setId(_id);
+  }, []);
+
+  function containsSpecialChars(str) {
+    const specialChars = /[`!@#$%^&*()_+\=\[\]{};':"\\|,.<>\/?~]/;
+    return specialChars.test(str);
+  }
+
+  const saveUser = async (e) => {
+    e.preventDefault();
+    setError(null);
+    if (!files.ic) {
+      setError(
+        "Vă rugăm să încărcați o poză cu buletinul dvs. pentru a vă putea valida domiciliul!"
+      );
+      return;
+    }
+    const fields = e.target;
+    if (
+      containsSpecialChars(fields.first.value) ||
+      containsSpecialChars(fields.last.value)
+    ) {
+      setError("Numele sau prenumele nu poate conține caractere speciale!");
+      return;
+    }
+    setLoading(true);
+    const info = {
+      firstName: fields.first.value,
+      lastName: fields.last.value,
+      ic: files.ic,
+      img: files.profileImg,
+    };
+    const { data } = await axios.post(`/api/account/${id}`, info);
+    setLoading(false);
+    if (data.status === "SUCCESS") {
+      localStorage.removeItem("step");
+      localStorage.removeItem("id");
+      sessionStorage.setItem("name", info.firstName);
+      setStep(step + 1);
+    }
+    setError("A apărut o eroare. Vă rugam încercați din nou mai târziu!");
+  };
 
   const verifyToken = async (e) => {
     e.preventDefault();
@@ -29,6 +80,7 @@ const SignUp = () => {
     setLoading(false);
     if (data.status === "SUCCESS") {
       setStep(step + 1);
+      localStorage.setItem("step", "3");
     } else if (data.status === "FAILED")
       setError("Ați introdus un cod greșit. Încercați din nou!");
     else setError("A apărut o eroare. Vă rugam încercați din nou mai târziu!");
@@ -56,6 +108,8 @@ const SignUp = () => {
     if (data.status === "SUCCESS") {
       setId(data.id);
       setStep(step + 1);
+      localStorage.setItem("step", "2");
+      localStorage.setItem("id", data.id);
     } else if (data.status === "DUPLICATED")
       setError(
         "Această adresă de email este deja folosită. Vă rugăm să introduceți alta!"
@@ -78,7 +132,7 @@ const SignUp = () => {
           className="h-full bg-white lg:bg-blue"
         >
           <SwiperSlide>
-            <Image src="/city3.jpg" layout="fill" objectFit="cover" />
+            <Image priority src="/city3.jpg" layout="fill" objectFit="cover" />
             <div className=" w-full h-full relative text-center flex bg-black bg-opacity-30">
               <p className="mt-auto mb-10 w-full text-white">
                 IdeeRO este o platformă care își propune să facă auzită vocea
@@ -87,7 +141,7 @@ const SignUp = () => {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <Image src="/city1.jpg" layout="fill" objectFit="cover" />
+            <Image priority src="/city1.jpg" layout="fill" objectFit="cover" />
             <div className=" w-full h-full relative text-center flex bg-black bg-opacity-30">
               <p className="mt-auto w-full mb-10 text-white">
                 Aici fiecare utilizator are dreptul să-și exprime
@@ -97,7 +151,7 @@ const SignUp = () => {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <Image src="/city2.jpg" layout="fill" objectFit="cover" />
+            <Image priority src="/city2.jpg" layout="fill" objectFit="cover" />
             <div className=" w-full h-full relative text-center flex bg-black bg-opacity-30">
               <p className="mt-auto w-full mb-10 text-white">
                 Idee cu idee, împreună putem clădi lumea perfectă!
@@ -122,7 +176,16 @@ const SignUp = () => {
           setError={setError}
         />
       )}
-      {step === 3 && <SignUpS3 error={error} id={id} />}
+      {step === 3 && (
+        <SignUpS3
+          loading={loading}
+          error={error}
+          files={files}
+          setFiles={setFiles}
+          saveUser={saveUser}
+        />
+      )}
+      {step === 4 && <SignUpS4 />}
     </div>
   );
 };

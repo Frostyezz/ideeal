@@ -38,7 +38,7 @@ export default function Upload({ onFileAccepted, text }) {
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      <p>{dropText}</p>
+      <p className="text-center">{dropText}</p>
     </Center>
   );
 }

@@ -15,6 +15,7 @@ const AccountSchema = new mongoose.Schema({
   verified: {
     email: Boolean,
     status: String,
+    ic: String,
   },
 });
 
