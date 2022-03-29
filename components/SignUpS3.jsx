@@ -90,17 +90,6 @@ const SignUpS3 = ({ error, setFiles, files, saveUser, loading }) => {
               />
             )}
             <br />
-            {files.ic ? (
-              <Alert status="success">
-                <AlertIcon className="rounded animate__animated animate__fadeInDown animate__faster" />
-                Imaginea buletinului a fost încărcată cu succes!
-              </Alert>
-            ) : (
-              <Upload
-                onFileAccepted={(file) => sendIC(file)}
-                text="Trageți sau încărcați o poza cu buletinul dvs. (obligatoriu)"
-              />
-            )}
 
             {loading ? (
               <Button isDisabled className="w-full mt-5 shadow">

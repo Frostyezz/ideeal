@@ -11,9 +11,23 @@ export default async function handler(req, res) {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           img: req.body.img,
-          verified: {
-            status: "PENDING",
-            ic: req.body.ic,
+        });
+        res.status(200).json({ status: "SUCCESS" });
+      } catch (error) {
+        res.status(200).json({ status: "ERROR", error });
+      }
+      break;
+
+    case "PUT":
+      try {
+        const updated = await Account.findByIdAndUpdate(id, {
+          location: {
+            city: req.body.city,
+            county: req.body.county,
+            verified: {
+              status: "PENDING",
+              ic: req.body.ic,
+            },
           },
         });
         res.status(200).json({ status: "SUCCESS" });

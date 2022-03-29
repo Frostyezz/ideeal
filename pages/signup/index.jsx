@@ -13,6 +13,7 @@ import SignUpS1 from "../../components/SignUpS1";
 import SignUpS2 from "../../components/SignUpS2";
 import SignUpS3 from "../../components/SignUpS3";
 import SignUpS4 from "../../components/SignUpS4";
+import SignUpS5 from "../../components/SignUpS5";
 
 const SignUp = () => {
   const [error, setError] = useState(null);
@@ -22,6 +23,10 @@ const SignUp = () => {
   const [files, setFiles] = useState({
     ic: null,
     profileImg: null,
+  });
+  const [location, setLocation] = useState({
+    county: null,
+    city: null,
   });
   useEffect(() => {
     const current = localStorage.getItem("step");
@@ -35,15 +40,35 @@ const SignUp = () => {
     return specialChars.test(str);
   }
 
+  const saveLocation = async (e) => {
+    e.preventDefault();
+    setError(null);
+    if (!location.county || !location.city) {
+      setError("Vă rugăm să selectați județul și localitatea.");
+      return;
+    }
+    if (!files.ic) {
+      setError("Vă rugăm să încărcați o poză cu buletinul dvs.");
+      return;
+    }
+    const info = {
+      ...location,
+      ic: files.ic,
+    };
+    setLoading(true);
+    const { data } = await axios.put(`/api/account/${id}`, info);
+    setLoading(false);
+    if (data.status === "SUCCESS") {
+      localStorage.removeItem("step");
+      localStorage.removeItem("id");
+      setStep(step + 1);
+    } else
+      setError("A apărut o eroare. Vă rugam încercați din nou mai târziu!");
+  };
+
   const saveUser = async (e) => {
     e.preventDefault();
     setError(null);
-    if (!files.ic) {
-      setError(
-        "Vă rugăm să încărcați o poză cu buletinul dvs. pentru a vă putea valida domiciliul!"
-      );
-      return;
-    }
     const fields = e.target;
     if (
       containsSpecialChars(fields.first.value) ||
@@ -54,20 +79,18 @@ const SignUp = () => {
     }
     setLoading(true);
     const info = {
-      firstName: fields.first.value,
-      lastName: fields.last.value,
-      ic: files.ic,
+      firstName: fields.first.value.trim(),
+      lastName: fields.last.value.trim(),
       img: files.profileImg,
     };
     const { data } = await axios.post(`/api/account/${id}`, info);
     setLoading(false);
     if (data.status === "SUCCESS") {
-      localStorage.removeItem("step");
-      localStorage.removeItem("id");
-      sessionStorage.setItem("name", info.firstName);
+      localStorage.setItem("name", info.firstName);
+      localStorage.setItem("step", "4");
       setStep(step + 1);
-    }
-    setError("A apărut o eroare. Vă rugam încercați din nou mai târziu!");
+    } else
+      setError("A apărut o eroare. Vă rugam încercați din nou mai târziu!");
   };
 
   const verifyToken = async (e) => {
@@ -185,7 +208,18 @@ const SignUp = () => {
           saveUser={saveUser}
         />
       )}
-      {step === 4 && <SignUpS4 />}
+      {step === 4 && (
+        <SignUpS5
+          loading={loading}
+          error={error}
+          files={files}
+          setFiles={setFiles}
+          location={location}
+          setLocation={setLocation}
+          saveLocation={(e) => saveLocation(e)}
+        />
+      )}
+      {step === 5 && <SignUpS4 />}
     </div>
   );
 };
