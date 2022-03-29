@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
         const html = `
             <body>
-            Codul tău de comfirmare este:
+            Codul tău de confirmare este:
             <br /><br />
             <b>${token}</b>
             <br /><br />
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
           to: req.body.email,
           from: "ideero@robertmoraru.live",
           subject: "Ideero: Cod de Confirmare Email",
-          message: `Codul tău de comfirmare este: ${token}`,
+          message: `Codul tău de confirmare este: ${token}`,
           html,
         };
         mail.send(data);
@@ -62,7 +62,7 @@ export default async function handler(req, res) {
         await EmailStatuse.findOneAndUpdate({ id: req.body.id }, { token });
         const html = `
             <body>
-            Noul tău cod de comfirmare este:
+            Noul tău cod de confirmare este:
             <br /><br />
             <b>${token}</b>
             <br /><br />
@@ -75,7 +75,7 @@ export default async function handler(req, res) {
           to: account.email,
           from: "ideero@robertmoraru.live",
           subject: "Ideero: Cod de Confirmare Email",
-          message: `Noul tău cod de comfirmare este: ${token}`,
+          message: `Noul tău cod de confirmare este: ${token}`,
           html,
         };
         mail.send(data);

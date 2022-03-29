@@ -86,7 +86,7 @@ const SignUp = () => {
     const { data } = await axios.post(`/api/account/${id}`, info);
     setLoading(false);
     if (data.status === "SUCCESS") {
-      localStorage.setItem("name", info.firstName);
+      sessionStorage.setItem("name", info.firstName);
       localStorage.setItem("step", "4");
       setStep(step + 1);
     } else
@@ -111,7 +111,6 @@ const SignUp = () => {
 
   const sendCredentials = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
     const fields = e.target;
     if (fields.confirm.value !== fields.password.value) {
@@ -126,6 +125,7 @@ const SignUp = () => {
       email: fields.email.value,
       password: fields.password.value,
     };
+    setLoading(true);
     const { data } = await axios.post("/api/verifyEmail", info);
     setLoading(false);
     if (data.status === "SUCCESS") {

@@ -81,7 +81,11 @@ const SignUpS2 = ({ error, verifyToken, id, setError, loading }) => {
                 <CircularProgress size="30px" isIndeterminate />
               </Button>
             ) : (
-              <Button className="w-full mt-5 shadow" type="submit">
+              <Button
+                colorScheme="blue"
+                className="w-full mt-5 shadow"
+                type="submit"
+              >
                 Confirma
               </Button>
             )}

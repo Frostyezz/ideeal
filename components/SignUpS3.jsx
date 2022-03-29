@@ -96,7 +96,7 @@ const SignUpS3 = ({ error, setFiles, files, saveUser, loading }) => {
                 <CircularProgress size="30px" isIndeterminate />
               </Button>
             ) : (
-              <Button className="w-full mt-5 shadow" type="submit">
+              <Button colorScheme="blue" className="w-full mt-5 shadow" type="submit">
                 Salvează
               </Button>
             )}
