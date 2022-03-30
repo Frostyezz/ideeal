@@ -137,7 +137,10 @@ const SignIn = () => {
           <SignInForm
             error={error}
             loading={loading}
-            setResetPassword={() => setResetPassword(resetPassword + 1)}
+            setResetPassword={() => {
+              setError(null);
+              setResetPassword(resetPassword + 1);
+            }}
             logIn={logIn}
           />
         )}
