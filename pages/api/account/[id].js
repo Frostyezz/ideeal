@@ -24,10 +24,11 @@ export default async function handler(req, res) {
           location: {
             city: req.body.city,
             county: req.body.county,
-            verified: {
-              status: "PENDING",
-              ic: req.body.ic,
-            },
+          },
+          verified: {
+            email: true,
+            status: "PENDING",
+            ic: req.body.ic,
           },
         });
         res.status(200).json({ status: "SUCCESS" });

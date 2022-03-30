@@ -29,7 +29,6 @@ const SignUpS2 = ({ error, verifyToken, id, setError, loading }) => {
   const resendToken = async () => {
     setError(null);
     const { data } = await axios.patch("/api/verifyEmail", { id });
-    console.log(data);
     if (data.status === "ERROR")
       setError("A apărut o eroare. Vă rugam încercați din nou mai târziu!");
     else {
@@ -86,7 +85,7 @@ const SignUpS2 = ({ error, verifyToken, id, setError, loading }) => {
                 className="w-full mt-5 shadow"
                 type="submit"
               >
-                Confirma
+                Confirmă
               </Button>
             )}
             {cooldown ? (
