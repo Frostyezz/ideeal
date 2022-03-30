@@ -31,7 +31,9 @@ const ResetPasswordS3 = ({
         {!success ? (
           <form
             onSubmit={(e) => {
-              setSuccess(true);
+              if (e.target.password.value === e.target.confirm.value) {
+                setSuccess(true);
+              }
               sendPassword(e);
             }}
           >
