@@ -1,9 +1,9 @@
-import { verify } from "@tsndr/cloudflare-worker-jwt";
+import { jwtVerify } from "jose";
 import { NextResponse } from "next/server";
 
 const secret = process.env.JWT_SECRET;
 
-export default function middleware(req) {
+export default async function middleware(req) {
   const { cookies } = req;
 
   const jwt = cookies.IdeeROJWT;
@@ -24,7 +24,7 @@ export default function middleware(req) {
     }
 
     try {
-      verify(jwt, secret);
+      await jwtVerify(jwt, new TextEncoder().encode(secret));
       return NextResponse.next();
     } catch (error) {
       url.pathname = "/";
@@ -33,7 +33,7 @@ export default function middleware(req) {
   } else if (publicURLS.includes(url.pathname)) {
     if (jwt) {
       try {
-        verify(jwt, secret);
+        await jwtVerify(jwt, new TextEncoder().encode(secret));
         url.pathname = "/feed";
         return NextResponse.rewrite(url);
       } catch (error) {

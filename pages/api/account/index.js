@@ -1,8 +1,9 @@
 import dbConnect from "../../../util/dbConnect";
 import Account from "../../../models/Account";
 import bcrypt from "bcrypt";
-import { sign } from "@tsndr/cloudflare-worker-jwt";
+import { SignJWT } from "jose";
 import { serialize } from "cookie";
+import { nanoid } from "nanoid";
 const secret = process.env.JWT_SECRET;
 
 export default async function handler(req, res) {
@@ -17,14 +18,14 @@ export default async function handler(req, res) {
         if (match) {
           const user = { ...account._doc, password: null };
           if (user.verified.status === "APPROVED") {
-            const token = sign(
-              {
-                exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
-                role: user.role,
-                id: user._id,
-              },
-              secret
-            );
+            const token = await new SignJWT({})
+              .setProtectedHeader({
+                alg: "HS256",
+              })
+              .setJti(nanoid())
+              .setIssuedAt()
+              .setExpirationTime("30d")
+              .sign(new TextEncoder().encode(secret));
             const serialised = serialize("IdeeROJWT", token, {
               httpOnly: true,
               secure: process.env.NODE_ENV !== "development",
