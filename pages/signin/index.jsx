@@ -101,7 +101,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="w-screen bg-white h-screen w-content bg-blue flex flex-col lg:flex-row justify-center items-center">
+    <div className="w-screen bg-white h-screen w-content flex flex-col lg:flex-row justify-center items-center">
       <div className="bg-white lg:h-full h-1/2 w-full flex lg:w-1/2">
         <Swiper
           spaceBetween={30}

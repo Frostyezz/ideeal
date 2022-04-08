@@ -8,14 +8,10 @@ export default async function middleware(req) {
 
   const jwt = cookies.IdeeROJWT;
 
-  const protectedURLS = ["/feed"];
+  const protectedURLS = ["/feed", "/admin"];
   const publicURLS = ["/", "/signup", "/signin"];
 
   const url = req.nextUrl.clone();
-
-  if (url.pathname.includes("/admin")) {
-    console.log("admin");
-  }
 
   if (protectedURLS.includes(url.pathname)) {
     if (jwt === undefined) {
