@@ -13,6 +13,10 @@ export default function middleware(req) {
 
   const url = req.nextUrl.clone();
 
+  if (url.pathname.includes("/admin")) {
+    console.log("admin");
+  }
+
   if (protectedURLS.includes(url.pathname)) {
     if (jwt === undefined) {
       url.pathname = "/";
