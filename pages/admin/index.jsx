@@ -13,7 +13,7 @@ const Admin = () => {
     if (!user || user.role === "USER") router.push("/feed");
   }, []);
   return (
-    <div className="w-screen min-h-screen flex justify-center items-center bg-gray">
+    <div className="w-screen min-h-screen flex justify-center items-center bg-gray overflow-x-hidden">
       {user && user.role === "ADMIN" && <AdminPanel user={user} />}
     </div>
   );
