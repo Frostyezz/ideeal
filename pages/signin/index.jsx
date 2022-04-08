@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
+
+import { useRouter } from "next/router";
 
 import axios from "axios";
+
+import { UserContext } from "../../contexts/userContext";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -13,12 +17,15 @@ import ResetPasswordS2 from "../../components/ResetPasswordS2";
 import ResetPasswordS3 from "../../components/ResetPasswordS3";
 
 import Image from "next/image";
-
 const SignIn = () => {
   const [resetPassword, setResetPassword] = useState(0);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+
+  const { addUser } = useContext(UserContext);
+
+  const router = useRouter();
 
   const logIn = async (e) => {
     e.preventDefault();
@@ -34,7 +41,10 @@ const SignIn = () => {
     if (data.status === "SUCCESS") {
       if (data.user.verified.status !== "APPROVED")
         setError("Contul dvs. nu a fost validat încă. Reveniți mai târziu!");
-      else if (data.user.verified.status === "APPROVED") setError("Logged in");
+      else if (data.user.verified.status === "APPROVED") {
+        addUser(data.user);
+        router.push("/feed");
+      }
     } else setError("Adresa de email sau parola introdusă este greșită.");
   };
 
