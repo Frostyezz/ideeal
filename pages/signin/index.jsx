@@ -34,6 +34,7 @@ const SignIn = () => {
     if (data.status === "SUCCESS") {
       if (data.user.verified.status !== "APPROVED")
         setError("Contul dvs. nu a fost validat încă. Reveniți mai târziu!");
+      else if (data.user.verified.status === "APPROVED") setError("Logged in");
     } else setError("Adresa de email sau parola introdusă este greșită.");
   };
 

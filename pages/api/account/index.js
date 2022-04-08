@@ -1,6 +1,9 @@
 import dbConnect from "../../../util/dbConnect";
 import Account from "../../../models/Account";
 import bcrypt from "bcrypt";
+import { sign } from "jsonwebtoken";
+import { serialize } from "cookie";
+const secret = process.env.JWT_SECRET;
 
 export default async function handler(req, res) {
   await dbConnect();
@@ -13,6 +16,24 @@ export default async function handler(req, res) {
         const match = await bcrypt.compare(password, account.password);
         if (match) {
           const user = { ...account._doc, password: null };
+          if (user.verified.status === "APPROVED") {
+            const token = sign(
+              {
+                exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+                role: user.role,
+                id: user._id,
+              },
+              secret
+            );
+            const serialised = serialize("IdeeROJWT", token, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV !== "development",
+              sameSite: "strict",
+              maxAge: 60 * 60 * 24 * 30,
+              path: "/",
+            });
+            res.setHeader("Set-Cookie", serialised);
+          }
           res.status(200).json({ status: "SUCCESS", user });
         } else res.status(200).json({ status: "FAILED" });
       } catch (error) {
