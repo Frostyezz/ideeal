@@ -12,6 +12,7 @@
     "@emotion/react": "11",
     "@emotion/styled": "11",
     "@sendgrid/mail": "^7.6.2",
+    "@tsndr/cloudflare-worker-jwt": "^1.1.6",
     "animate.css": "^4.1.1",
     "autoprefixer": "^10.4.4",
     "axios": "^0.26.1",

@@ -1,4 +1,4 @@
-import { verify } from "jsonwebtoken";
+import { verify } from "@tsndr/cloudflare-worker-jwt";
 import { NextResponse } from "next/server";
 
 const secret = process.env.JWT_SECRET;

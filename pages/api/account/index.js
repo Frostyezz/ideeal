@@ -1,7 +1,7 @@
 import dbConnect from "../../../util/dbConnect";
 import Account from "../../../models/Account";
 import bcrypt from "bcrypt";
-import { sign } from "jsonwebtoken";
+import { sign } from "@tsndr/cloudflare-worker-jwt";
 import { serialize } from "cookie";
 const secret = process.env.JWT_SECRET;
 
