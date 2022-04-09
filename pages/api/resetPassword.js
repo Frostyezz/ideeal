@@ -1,7 +1,6 @@
 import dbConnect from "../../util/dbConnect";
 import Account from "../../models/Account";
 import PasswordStatuse from "../../models/PasswordStatus";
-import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import mail from "@sendgrid/mail";
 

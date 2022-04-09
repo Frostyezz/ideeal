@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 
@@ -11,9 +11,17 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  CircularProgress,
 } from "@chakra-ui/react";
 
-const RequestModal = ({ request, isOpen, onClose }) => {
+const RequestModal = ({
+  request,
+  isOpen,
+  onClose,
+  loading,
+  approve,
+  reject,
+}) => {
   return (
     <Modal
       size="2xl"
@@ -54,10 +62,24 @@ const RequestModal = ({ request, isOpen, onClose }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button mr={3} colorScheme="gray">
-            Respinge
-          </Button>
-          <Button colorScheme="blue">Aprobă</Button>
+          {loading === 2 ? (
+            <Button isDisabled>
+              <CircularProgress size="30px" isIndeterminate />
+            </Button>
+          ) : (
+            <Button onClick={reject} mr={3} colorScheme="gray">
+              Respinge
+            </Button>
+          )}
+          {loading === 1 ? (
+            <Button isDisabled>
+              <CircularProgress size="30px" isIndeterminate />
+            </Button>
+          ) : (
+            <Button onClick={approve} colorScheme="blue">
+              Aprobă
+            </Button>
+          )}
         </ModalFooter>
       </ModalContent>
     </Modal>

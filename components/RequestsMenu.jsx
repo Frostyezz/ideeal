@@ -20,6 +20,7 @@ const RequestsMenu = ({ setMenu, user }) => {
   const [selected, setSelected] = useState(null);
   const [requests, setRequests] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [_loading, _setLoading] = useState(0);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -36,6 +37,33 @@ const RequestsMenu = ({ setMenu, user }) => {
         }
       });
   }, []);
+
+  const approve = async () => {
+    _setLoading(1);
+    const { data } = await axios.patch(`/api/account/pending/${selected._id}`);
+    if (data.status === "SUCCESS") {
+      const updated = requests.filter(
+        (request) => request._id !== selected._id
+      );
+      setRequests(updated);
+      setSelected(null);
+    }
+    _setLoading(0);
+  };
+
+  const reject = async () => {
+    _setLoading(2);
+    const { data } = await axios.delete(`/api/account/pending/${selected._id}`);
+    if (data.status === "SUCCESS") {
+      const updated = requests.filter(
+        (request) => request._id !== selected._id
+      );
+      setRequests(updated);
+      setSelected(null);
+    }
+    _setLoading(0);
+  };
+
   return (
     <div className="flex flex-col p-5 shadow-shadow_nav bg-white animate__animated animate__fadeIn">
       <h1 className="md:text-3xl text-xl font-bold text-center mb-4">
@@ -96,7 +124,14 @@ const RequestsMenu = ({ setMenu, user }) => {
         />
       )}
       {selected && (
-        <RequestModal request={selected} isOpen={isOpen} onClose={onClose} />
+        <RequestModal
+          request={selected}
+          isOpen={isOpen}
+          onClose={onClose}
+          loading={_loading}
+          approve={approve}
+          reject={reject}
+        />
       )}
       <Button
         onClick={() => setMenu("menu")}
