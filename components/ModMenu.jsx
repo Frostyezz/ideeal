@@ -3,10 +3,7 @@ import axios from "axios";
 
 import {
   Avatar,
-  Alert,
-  AlertIcon,
   CircularProgress,
-  useDisclosure,
   Button,
   useToast,
   Input,
@@ -100,7 +97,7 @@ const ModMenu = ({ user, setMenu }) => {
           <h2>Moderatori:</h2>
           <Input
             onChange={(e) => setQuery({ ...query, mods: e.target.value })}
-            className="border-blue w-52"
+            className="border-blue w-52 mb-4"
             placeholder="Caută moderatori"
           />
           <ul className="flex flex-col max-h-96 overflow-y-auto no-scrollbar p-3 mb-3">
@@ -149,7 +146,7 @@ const ModMenu = ({ user, setMenu }) => {
           <h2>Utilizatori:</h2>
           <Input
             onChange={(e) => setQuery({ ...query, users: e.target.value })}
-            className="border-blue w-52"
+            className="border-blue w-52 mb-4"
             placeholder="Caută utilizatori"
           />
           <ul className="flex flex-col max-h-96 overflow-y-auto no-scrollbar p-3">
@@ -174,7 +171,7 @@ const ModMenu = ({ user, setMenu }) => {
                           {user.firstName} {user.lastName}
                         </b>
                         <span>
-                          S-a alăturat acum{" "}
+                          S-a alăturat cu{" "}
                           <Moment fromNow locale="ro">
                             {user.joined}
                           </Moment>
