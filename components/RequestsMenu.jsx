@@ -9,6 +9,7 @@ import {
   CircularProgress,
   useDisclosure,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 
 import Moment from "react-moment";
@@ -22,6 +23,7 @@ const RequestsMenu = ({ setMenu, user }) => {
   const [loading, setLoading] = useState(true);
   const [_loading, _setLoading] = useState(0);
 
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -47,7 +49,20 @@ const RequestsMenu = ({ setMenu, user }) => {
       );
       setRequests(updated);
       setSelected(null);
-    }
+      toast({
+        title: "Cererea a fost aprobată cu succes!",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    } else
+      toast({
+        title: "A apărut o eroare!",
+        description: "Încercați din nou mai târziu.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
     _setLoading(0);
   };
 
@@ -60,7 +75,20 @@ const RequestsMenu = ({ setMenu, user }) => {
       );
       setRequests(updated);
       setSelected(null);
-    }
+      toast({
+        title: "Cererea a fost respinsă cu succes!",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    } else
+      toast({
+        title: "A apărut o eroare!",
+        description: "Încercați din nou mai târziu.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
     _setLoading(0);
   };
 
