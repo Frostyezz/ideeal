@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { UserContext } from "../../contexts/userContext";
 
 import AdminPanel from "../../components/AdminPanel";
-
 const Admin = () => {
   const router = useRouter();
   const { user } = useContext(UserContext);

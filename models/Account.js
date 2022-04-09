@@ -16,6 +16,7 @@ const AccountSchema = new mongoose.Schema({
     email: Boolean,
     status: String,
     ic: String,
+    sent: Date,
   },
 });
 

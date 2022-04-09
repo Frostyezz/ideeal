@@ -29,6 +29,7 @@ export default async function handler(req, res) {
             email: true,
             status: "PENDING",
             ic: req.body.ic,
+            sent: new Date(),
           },
         });
         res.status(200).json({ status: "SUCCESS" });

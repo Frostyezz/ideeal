@@ -18,6 +18,19 @@ export default async function handler(req, res) {
       }
       break;
 
+    case "PUT":
+      try {
+        const { city, county } = req.body;
+        const pending = await Account.find({
+          "verified.status": "PENDING",
+          "location.county": county,
+          "location.city": city,
+        });
+        res.status(200).json({ status: "SUCCESS", pending });
+      } catch (error) {
+        res.status(200).json({ status: "ERROR", error });
+      }
+      break;
     default:
       break;
   }
