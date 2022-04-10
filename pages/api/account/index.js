@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         if (match) {
           const user = { ...account._doc, password: null };
           if (user.verified.status === "APPROVED") {
-            const token = await new SignJWT({})
+            const token = await new SignJWT({ role: user.role })
               .setProtectedHeader({
                 alg: "HS256",
               })

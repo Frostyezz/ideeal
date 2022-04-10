@@ -8,10 +8,28 @@ export default async function middleware(req) {
 
   const jwt = cookies.IdeeROJWT;
 
-  const protectedURLS = ["/feed", "/admin"];
+  const protectedURLS = ["/feed"];
   const publicURLS = ["/", "/signup", "/signin"];
 
   const url = req.nextUrl.clone();
+
+  if (url.pathname.includes("/admin")) {
+    try {
+      const verified = await jwtVerify(jwt, new TextEncoder().encode(secret));
+      if (
+        verified.payload.role !== "USER" &&
+        verified.payload.role !== "MODERATOR"
+      ) {
+        return NextResponse.next();
+      } else {
+        url.pathname = "/feed";
+        return NextResponse.rewrite(url);
+      }
+    } catch (error) {
+      url.pathname = "/";
+      return NextResponse.rewrite(url);
+    }
+  }
 
   if (protectedURLS.includes(url.pathname)) {
     if (jwt === undefined) {
