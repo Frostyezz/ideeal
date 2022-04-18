@@ -14,7 +14,7 @@ const SignInForm = ({ error, loading, setResetPassword, logIn }) => {
   return (
     <div className="h-full flex flex-col items-center lg:justify-center">
       <h1 className="font-bold text-center text-2xl">
-        Completați câmpurile pentru a intra in cont
+        Completați câmpurile pentru a intra în cont
       </h1>
       <FormControl className="2xl:px-48">
         <form onSubmit={(e) => logIn(e)}>
