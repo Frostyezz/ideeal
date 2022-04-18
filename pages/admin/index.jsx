@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import { useRouter } from "next/router";
 
@@ -10,9 +10,6 @@ import SuperAdminPanel from "../../components/SuperAdminPanel";
 const Admin = () => {
   const router = useRouter();
   const { user } = useContext(UserContext);
-  useEffect(() => {
-    if (!user || user.role === "USER") router.push("/feed");
-  }, []);
   return (
     <div className="w-screen min-h-screen flex justify-center items-center bg-gray overflow-x-hidden">
       {user && user.role === "ADMIN" && <AdminPanel user={user} />}

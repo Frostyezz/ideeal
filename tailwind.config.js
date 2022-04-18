@@ -13,9 +13,9 @@ module.exports = {
           "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
       },
       colors: {
-        white: "#e0fbfc",
+        white: "#f7edf0",
         orange: "#ee6c4d",
-        blue: "#98c1d9",
+        blue: "#87bfff",
         darkBlue: "#293241",
         gray: "#f4f4f4",
       },

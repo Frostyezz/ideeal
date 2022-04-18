@@ -92,7 +92,7 @@ const NavPopUp = ({ showNav }) => {
             <li>
               <Link href="/feed">
                 <a
-                  onClick={logOut}
+                  onClick={showNav}
                   className="flex justify-center items-center"
                 >
                   <FileRichtextFill className="mr-3 text-blue" />

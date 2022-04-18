@@ -9,7 +9,7 @@ const AccountSchema = new mongoose.Schema({
     city: String,
     county: String,
   },
-  joined: Date,
+  joined: { type: Date, default: Date.now },
   img: String,
   role: String,
   posts: [String],
