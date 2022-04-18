@@ -23,7 +23,7 @@ const Feed = ({ initialPosts }) => {
 export async function getServerSideProps() {
   const baseURL = !process.env.VERCEL_URL
     ? "http://localhost:3000"
-    : process.env.VERCEL_URL;
+    : `https://${process.env.VERCEL_URL}`;
   const res = await fetch(`${baseURL}/api/post`);
   const data = await res.json();
   return { props: { initialPosts: data.posts } };
