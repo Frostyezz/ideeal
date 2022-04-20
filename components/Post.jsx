@@ -9,12 +9,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
 
-import { Button, Avatar, useToast } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 
-import Moment from "react-moment";
-import "moment/locale/ro";
-
-import ShowMoreText from "react-show-more-text";
+import PostBody from "./postBody";
+import ShareButton from "./ShareButton";
 
 import { UserContext } from "../contexts/userContext";
 
@@ -26,7 +24,10 @@ import {
   XSquareFill,
 } from "react-bootstrap-icons";
 
+import { useRouter } from "next/router";
+
 const Post = ({ post }) => {
+  const router = useRouter();
   const { user } = useContext(UserContext);
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/post/stats/${post._id}`, fetcher, {
@@ -74,52 +75,7 @@ const Post = ({ post }) => {
   return (
     <li className="my-2 md:p-0 p-3 flex flex-col bg-blue shadow-shadow_nav">
       <div className="flex flex-col">
-        <div className="flex flex-row md:p-3 border-b border-white pb-3 items-center">
-          <Avatar
-            size="md"
-            name={`${post.author.firstName} ${post.author.lastName}`}
-            src={post.author.img}
-            className="mr-3"
-          />
-
-          <div className="flex flex-col">
-            <div className="flex flex-row">
-              <h1 className="font-bold">{`${post.author.firstName} ${post.author.lastName}`}</h1>
-              {post.author.role !== "USER" && (
-                <span className="bg-orange ml-2 rounded-xl px-2">
-                  {post.author.role.replace("_", " ")}
-                </span>
-              )}
-            </div>
-            <div className="flex flex-row">
-              <span>
-                Postat acum{" "}
-                <Moment fromNow locale="ro">
-                  {post.postedAt}
-                </Moment>
-              </span>
-            </div>
-            <div>
-              <span>
-                {data ? data.stats.upvoters.length : 0}{" "}
-                {data && data.stats.upvoters.length !== 1 ? "voturi" : "vot"}
-              </span>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col md:px-3 pt-3">
-          <h1 className="font-bold text-xl ml-3">{post.title}</h1>
-          <ShowMoreText
-            lines={3}
-            more="Mai mult"
-            less="Mai puțin"
-            anchorClass="underline"
-            expanded={false}
-            truncatedEndingComponent={"... "}
-          >
-            <p>{post.desc}</p>
-          </ShowMoreText>
-        </div>
+        <PostBody post={post} data={data} lines={3} />
         {post.files && (
           <div className="md:my-0 my-3">
             <Swiper
@@ -172,16 +128,11 @@ const Post = ({ post }) => {
             leftIcon={<PencilSquare className="text-blue" />}
             colorScheme="gray"
             className="my-2"
+            onClick={() => router.push(`/post/${post._id}`)}
           >
             Comentarii
           </Button>
-          <Button
-            leftIcon={<ShareFill className="text-blue" />}
-            colorScheme="gray"
-            className="my-2"
-          >
-            Distribuie
-          </Button>
+          <ShareButton id={post._id} />
           <Button
             leftIcon={<FlagFill className="text-blue" />}
             colorScheme="gray"

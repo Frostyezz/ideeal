@@ -9,7 +9,7 @@ export default async function middleware(req) {
   const jwt = cookies.IdeeROJWT;
 
   const protectedURLS = ["/feed"];
-  const publicURLS = ["/", "/signup", "/signin"];
+  const publicURLS = ["/", "/signup", "/signin", "/post"];
 
   const url = req.nextUrl.clone();
 

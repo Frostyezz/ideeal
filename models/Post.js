@@ -4,12 +4,9 @@ const PostSchema = new mongoose.Schema({
   authorID: String,
   comments: [
     {
-      author: {
-        firstName: String,
-        lastName: String,
-        id: String,
-        img: String,
-      },
+      authorID: String,
+      content: String,
+      reply: String,
       postedAt: Date,
     },
   ],

@@ -112,7 +112,7 @@ const SignIn = () => {
             disableOnInteraction: false,
           }}
           modules={[Pagination, Autoplay]}
-          className="h-full bg-white lg:bg-blue"
+          className="h-full bg-white"
         >
           <SwiperSlide>
             <Image priority src="/city3.jpg" layout="fill" objectFit="cover" />

@@ -33,7 +33,7 @@ export async function getServerSideProps(ctx) {
     const baseURL = !process.env.VERCEL_URL
       ? "http://localhost:3000"
       : `https://${process.env.VERCEL_URL}`;
-    const res = await fetch(`${baseURL}/api/post/${payload.id}`);
+    const res = await fetch(`${baseURL}/api/feed/${payload.id}`);
     const data = await res.json();
     return { props: { initialPosts: data.posts } };
   } catch (error) {
