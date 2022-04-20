@@ -14,7 +14,7 @@ import axios from "axios";
 
 import { UserContext } from "../contexts/userContext";
 
-const CreatePost = () => {
+const CreatePost = ({ addPost }) => {
   const { user } = useContext(UserContext);
   const [files, setFiles] = useState(null);
   const [error, setError] = useState(null);
@@ -31,26 +31,25 @@ const CreatePost = () => {
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/auto/upload`,
         formData
       );
-      console.log(data);
       saved.push(data.url);
     });
+    setFiles(saved);
     toast({
       title: `Fișierele au fost încărcate!`,
       status: "success",
       duration: 4000,
       isClosable: true,
     });
-    setFiles(saved);
   };
 
   const removeFiles = () => {
+    setFiles(null);
     toast({
       title: `Fișierele încărcate au fost șterse!`,
       status: "success",
       duration: 4000,
       isClosable: true,
     });
-    setFiles(null);
   };
 
   const savePost = async (e) => {
@@ -60,16 +59,9 @@ const CreatePost = () => {
     const { title, desc } = e.target;
     const draft = {
       title: title.value,
-      desc: title.value,
+      desc: desc.value,
       files,
-      author: {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        id: user._id,
-        img: user.img,
-        joined: user.joined,
-        role: user.role,
-      },
+      authorID: user._id,
       location: {
         ...user.location,
       },
@@ -77,9 +69,21 @@ const CreatePost = () => {
     const { data } = await axios.post("/api/post", { draft });
     setLoading(false);
     if (data.status === "SUCCESS") {
+      const post = {
+        ...data.post,
+        author: user,
+      };
+      addPost(post);
       setFiles(null);
-    } else
+      toast({
+        title: `Postarea a fost publicată cu succes!`,
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+      });
+    } else {
       setError("A apărut o eroare. Vă rugam încercați din nou mai târziu!");
+    }
   };
   return (
     <form
@@ -111,7 +115,7 @@ const CreatePost = () => {
       />
       <UploadMultiple
         onFileAccepted={saveFiles}
-        text="Trageți sau apăsați poze sau videoclipuri"
+        text="Trageți sau apăsați pentru a încărca poze sau videoclipuri"
       />
       {files && (
         <Button

@@ -11,7 +11,7 @@ import {
 
 import CreatePost from "./CreatePost";
 
-const FeedOptions = () => {
+const FeedOptions = ({ addPost }) => {
   return (
     <div className="sticky z-10 top-0 bg-white shadow-shadow_nav">
       <Accordion allowToggle>
@@ -25,7 +25,7 @@ const FeedOptions = () => {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            <CreatePost />
+            <CreatePost addPost={addPost} />
           </AccordionPanel>
         </AccordionItem>
 

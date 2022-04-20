@@ -8,7 +8,14 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const posts = await Post.find();
-        res.status(200).json({ status: "SUCCESS", posts });
+        const updated = [];
+        posts.forEach(async (post) => {
+          const author = await Account.findById(post.authorID).select(
+            "-password"
+          );
+          updated.push({ ...post, author });
+        });
+        res.status(200).json({ status: "SUCCESS", posts: updated });
       } catch (error) {
         res.status(200).json({ status: "ERROR", error });
       }
@@ -19,9 +26,12 @@ export default async function handler(req, res) {
         const post = new Post({
           ...draft,
           comments: [],
-          upvotes: 0,
+          upvoters: [],
         });
         const saved = await post.save();
+        const user = await Account.findById(draft.authorID);
+        user.posts.push(saved._id);
+        await Account.findByIdAndUpdate(user._id, { posts: user.posts });
         res.status(200).json({ status: "SUCCESS", post: saved });
       } catch (error) {
         res.status(200).json({ status: "ERROR", error });

@@ -8,8 +8,8 @@ const PostProvider = ({ children }) => {
   const addPost = (post) => {
     setPosts([...posts, post]);
   };
-  const populatePosts = (post) => {
-    setPosts(post);
+  const populatePosts = (list) => {
+    setPosts(list);
   };
 
   return (

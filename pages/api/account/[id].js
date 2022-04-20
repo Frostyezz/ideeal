@@ -5,6 +5,15 @@ export default async function handler(req, res) {
   await dbConnect();
   const { id } = req.query;
   switch (req.method) {
+    case "GET":
+      try {
+        const user = await Account.findById(id).select("-password");
+        res.status(200).json({ status: "SUCCESS", user });
+      } catch (error) {
+        res.status(200).json({ status: "ERROR", error });
+      }
+      break;
+
     case "POST":
       try {
         const updated = await Account.findByIdAndUpdate(id, {

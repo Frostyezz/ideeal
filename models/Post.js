@@ -1,14 +1,7 @@
 import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema({
-  author: {
-    firstName: String,
-    lastName: String,
-    id: String,
-    img: String,
-    joined: Date,
-    role: String,
-  },
+  authorID: String,
   comments: [
     {
       author: {
@@ -25,7 +18,7 @@ const PostSchema = new mongoose.Schema({
     county: String,
   },
   postedAt: { type: Date, default: Date.now },
-  upvotes: Number,
+  upvoters: [String],
   title: String,
   desc: String,
   files: [String],
