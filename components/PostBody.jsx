@@ -7,6 +7,8 @@ import { Avatar } from "@chakra-ui/react";
 
 import ShowMoreText from "react-show-more-text";
 
+import TextTransition, { presets } from "react-text-transition";
+
 const PostBody = ({ data, post, lines }) => {
   return (
     <>
@@ -36,10 +38,16 @@ const PostBody = ({ data, post, lines }) => {
             </span>
           </div>
           <div>
-            <span>
-              {data ? data.stats.upvoters.length : 0}{" "}
-              {data && data.stats.upvoters.length !== 1 ? "voturi" : "vot"}
-            </span>
+            <TextTransition
+              text={
+                data
+                  ? `${data.stats.upvoters.length} ${
+                      data.stats.upvoters.length !== 1 ? "voturi" : "vot"
+                    }`
+                  : 0
+              }
+              springConfig={presets.wobbly}
+            />
           </div>
         </div>
       </div>

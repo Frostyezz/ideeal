@@ -21,6 +21,9 @@ export default async function handler(req, res) {
         if (upvoter) {
           await Post.findByIdAndUpdate(id, { $push: { upvoters: upvoter } });
         }
+        if (comment) {
+          await Post.findByIdAndUpdate(id, { $push: { comments: comment } });
+        }
         res.status(200).json({ status: "SUCCESS" });
       } catch (error) {
         res.status(200).json({ status: "ERROR", error });

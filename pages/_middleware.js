@@ -9,7 +9,7 @@ export default async function middleware(req) {
   const jwt = cookies.IdeeROJWT;
 
   const protectedURLS = ["/feed"];
-  const publicURLS = ["/", "/signup", "/signin", "/post"];
+  const publicURLS = ["/", "/signup", "/signin"];
 
   const url = req.nextUrl.clone();
 
@@ -29,6 +29,10 @@ export default async function middleware(req) {
       url.pathname = "/";
       return NextResponse.rewrite(url);
     }
+  }
+
+  if (url.pathname.includes("/post")) {
+    return NextResponse.next();
   }
 
   if (protectedURLS.includes(url.pathname)) {

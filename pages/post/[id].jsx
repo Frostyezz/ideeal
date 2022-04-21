@@ -6,6 +6,7 @@ import axios from "axios";
 import useSWR, { mutate } from "swr";
 
 import PostBody from "../../components/postBody";
+import CommentSection from "../../components/CommentSection";
 import ShareButton from "../../components/ShareButton";
 
 import { UserContext } from "../../contexts/userContext";
@@ -20,7 +21,6 @@ import { Pagination } from "swiper";
 import {
   ArrowUpSquareFill,
   FlagFill,
-  PencilSquare,
   XSquareFill,
 } from "react-bootstrap-icons";
 
@@ -68,10 +68,11 @@ const PostPage = ({ post }) => {
     }
   };
   const { user } = useContext(UserContext);
+
   return (
-    <div className="w-screen bg-white h-screen w-content flex flex-col lg:flex-row justify-center items-center">
+    <div className="w-screen bg-blue h-screen w-content flex flex-col lg:flex-row justify-center items-center">
       {post.files && (
-        <div className="bg-white lg:h-full h-1/2 w-full flex lg:w-1/2">
+        <div className="bg-white lg:h-full min-h-screen w-full flex lg:w-1/2">
           <Swiper
             spaceBetween={30}
             centeredSlides={true}
@@ -84,7 +85,7 @@ const PostPage = ({ post }) => {
                 {file.includes("/image/") ? (
                   <Image priority src={file} layout="fill" objectFit="cover" />
                 ) : (
-                  <video controls className="h-full w-full object-cover">
+                  <video controls className="h-full w-full">
                     <source src={file} type="video/mp4" />
                   </video>
                 )}
@@ -93,8 +94,10 @@ const PostPage = ({ post }) => {
           </Swiper>
         </div>
       )}
-      <div className="lg:w-1/2 flex bg-blue flex-col p-3 md:p-0 w-full h-full animate__animated animate__slideInLeft">
-        <PostBody data={data} post={post} lines={10} />
+      <div className="lg:w-1/2 flex bg-blue flex-col w-full h-full animate__animated animate__slideInLeft">
+        <div className="p-3">
+          <PostBody data={data} post={post} lines={10} />
+        </div>
         {user && (
           <div className="flex justify-evenly flex-wrap">
             {data && !data.stats.upvoters.includes(user._id) ? (
@@ -126,6 +129,12 @@ const PostPage = ({ post }) => {
             </Button>
           </div>
         )}
+        <div className="p-3 h-full bg-white no-scrollbar overflow-y-auto">
+          <CommentSection
+            comments={data ? data.stats.comments : []}
+            id={post._id}
+          />
+        </div>
       </div>
     </div>
   );
@@ -139,9 +148,23 @@ export async function getServerSideProps(ctx) {
       : `https://${process.env.VERCEL_URL}`;
     const res = await fetch(`${baseURL}/api/post/${id}`);
     const data = await res.json();
-    return { props: { post: data.post } };
+    if (data.status === "SUCCESS" && data.post)
+      return { props: { post: data.post } };
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/404",
+      },
+      props: {},
+    };
   } catch (error) {
-    return { props: { post: null } };
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/404",
+      },
+      props: {},
+    };
   }
 }
 

@@ -6,8 +6,11 @@ const PostSchema = new mongoose.Schema({
     {
       authorID: String,
       content: String,
-      reply: String,
-      postedAt: Date,
+      reply: {
+        name: String,
+        id: String,
+      },
+      postedAt: { type: Date, default: Date.now },
     },
   ],
   location: {

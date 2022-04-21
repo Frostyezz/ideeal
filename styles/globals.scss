@@ -12,6 +12,10 @@ body {
   font-family: "Poppins", sans-serif !important;
 }
 
+.min {
+  min-height: min-content;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
