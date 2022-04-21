@@ -11,7 +11,7 @@ import { Pagination } from "swiper";
 
 import { Button, useToast } from "@chakra-ui/react";
 
-import PostBody from "./postBody";
+import PostBody from "./PostBody";
 import ShareButton from "./ShareButton";
 
 import { UserContext } from "../contexts/userContext";

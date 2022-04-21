@@ -5,7 +5,7 @@ import Image from "next/image";
 import axios from "axios";
 import useSWR, { mutate } from "swr";
 
-import PostBody from "../../components/postBody";
+import PostBody from "../../components/PostBody";
 import CommentSection from "../../components/CommentSection";
 import ShareButton from "../../components/ShareButton";
 
