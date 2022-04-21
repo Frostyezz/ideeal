@@ -60,7 +60,7 @@ const Comment = ({ comment, id }) => {
       {data && (
         <li
           id={comment._id}
-          className="flex flex-col bg-blue p-3 rounded-xl mt-2 shadow-shadow_nav"
+          className="flex flex-col bg-blue p-3 rounded-xl mt-2 shadow-shadow_nav animate__animated animate__fadeIn animate__faster"
         >
           <div className="flex flex-row border-b border-white pb-3 items-center">
             <Avatar
@@ -89,8 +89,10 @@ const Comment = ({ comment, id }) => {
               </div>
               {comment.reply && (
                 <div>
-                  {comment.reply.id === user._id ? (
-                    <span>Ți-a răspuns la comentariu</span>
+                  {comment.reply.id === user?._id ? (
+                    <span className="text-orange">
+                      Ți-a răspuns la comentariu
+                    </span>
                   ) : (
                     <span>I-a răspuns lui {comment.reply.name}</span>
                   )}
