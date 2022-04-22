@@ -3,13 +3,14 @@ import React, { useContext } from "react";
 import Image from "next/image";
 
 import axios from "axios";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 
 import PostBody from "../../components/PostBody";
 import CommentSection from "../../components/CommentSection";
 import ShareButton from "../../components/ShareButton";
 import FavoriteButton from "../../components/FavoriteButton";
 import VoteButton from "../../components/VoteButton";
+import NotFound from "../404";
 
 import { UserContext } from "../../contexts/userContext";
 
@@ -23,65 +24,77 @@ const PostPage = ({ post }) => {
   const { data, error } = useSWR(`/api/post/stats/${post._id}`, fetcher, {
     refreshInterval: 60000,
   });
+
   const { user } = useContext(UserContext);
 
   return (
-    <div
-      className={`w-screen bg-blue h-screen w-content flex flex-col lg:flex-row justify-center items-center ${
-        !post.files && "pt-24"
-      }`}
-    >
-      {post.files && (
-        <div className="bg-white lg:h-full min-h-screen w-full flex lg:w-1/2">
-          <Swiper
-            spaceBetween={30}
-            centeredSlides={true}
-            pagination={{ clickable: true }}
-            modules={[Pagination]}
-            className="h-full w-full bg-white"
-          >
-            {post.files.map((file, i) => (
-              <SwiperSlide key={i}>
-                {file.includes("/image/") ? (
-                  <Image priority src={file} layout="fill" objectFit="cover" />
-                ) : (
-                  <video controls className="h-full w-full">
-                    <source src={file} type="video/mp4" />
-                  </video>
-                )}
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      )}
-      <div className="lg:w-1/2 flex bg-blue flex-col w-full h-full animate__animated animate__slideInLeft shadow-shadow_nav">
-        <div className="p-3">
-          <PostBody data={data} post={post} lines={10} />
-        </div>
-        {user && (
-          <div className="flex justify-evenly flex-wrap">
-            <VoteButton
-              id={post?._id}
-              user={user?._id}
-              upvoters={data ? data.stats.upvoters : []}
-            />
-            <ShareButton id={post._id} />
-            <FavoriteButton
-              id={post?._id}
-              user={user?._id}
-              favorites={data ? data.stats.favorites : []}
-            />
-          </div>
-        )}
+    <>
+      {data?.stats ? (
+        <div
+          className={`w-screen bg-blue h-screen w-content flex flex-col lg:flex-row justify-center items-center ${
+            !post.files && "pt-24"
+          }`}
+        >
+          {post.files && (
+            <div className="bg-white lg:h-full min-h-screen w-full flex lg:w-1/2">
+              <Swiper
+                spaceBetween={30}
+                centeredSlides={true}
+                pagination={{ clickable: true }}
+                modules={[Pagination]}
+                className="h-full w-full bg-white"
+              >
+                {post.files.map((file, i) => (
+                  <SwiperSlide key={i}>
+                    {file.includes("/image/") ? (
+                      <Image
+                        priority
+                        src={file}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    ) : (
+                      <video controls className="h-full w-full">
+                        <source src={file} type="video/mp4" />
+                      </video>
+                    )}
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          )}
+          <div className="lg:w-1/2 flex bg-blue flex-col w-full h-full animate__animated animate__slideInLeft shadow-shadow_nav">
+            <div className="p-3">
+              <PostBody data={data} post={post} lines={10} />
+            </div>
+            {user && (
+              <div className="flex justify-evenly flex-wrap">
+                <VoteButton
+                  id={post?._id}
+                  user={user?._id}
+                  upvoters={data ? data.stats?.upvoters : []}
+                />
+                <ShareButton id={post._id} />
+                <FavoriteButton
+                  id={post?._id}
+                  user={user?._id}
+                  favorites={data ? data.stats?.favorites : []}
+                />
+              </div>
+            )}
 
-        <div className="p-3 h-full bg-white no-scrollbar overflow-y-auto">
-          <CommentSection
-            comments={data ? data.stats.comments : []}
-            id={post._id}
-          />
+            <div className="p-3 h-full bg-white no-scrollbar overflow-y-auto">
+              <CommentSection
+                comments={data ? data.stats?.comments : []}
+                id={post._id}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <NotFound />
+      )}
+    </>
   );
 };
 

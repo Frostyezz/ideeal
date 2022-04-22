@@ -31,60 +31,69 @@ const Post = ({ post, removePost }) => {
   });
 
   return (
-    <li className="my-2 md:p-0 p-3 flex flex-col bg-blue shadow-shadow_nav">
-      <div className="flex flex-col">
-        <PostBody removePost={removePost} post={post} data={data} lines={3} />
-        {post.files && (
-          <div className="md:my-0 my-3">
-            <Swiper
-              spaceBetween={30}
-              centeredSlides={true}
-              pagination={{ clickable: true }}
-              modules={[Pagination]}
-              className="h-96 bg-white"
-            >
-              {post.files.map((file, i) => (
-                <SwiperSlide key={i}>
-                  {file.includes("/image/") ? (
-                    <Image
-                      priority
-                      src={file}
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  ) : (
-                    <video controls className="h-full w-full object-cover">
-                      <source src={file} type="video/mp4" />
-                    </video>
-                  )}
-                </SwiperSlide>
-              ))}
-            </Swiper>
+    <>
+      {data?.stats !== null && (
+        <li className="my-2 md:p-0 p-3 flex flex-col bg-blue shadow-shadow_nav">
+          <div className="flex flex-col">
+            <PostBody
+              removePost={removePost}
+              post={post}
+              data={data}
+              lines={3}
+            />
+            {post.files && (
+              <div className="md:my-0 my-3">
+                <Swiper
+                  spaceBetween={30}
+                  centeredSlides={true}
+                  pagination={{ clickable: true }}
+                  modules={[Pagination]}
+                  className="h-96 bg-white"
+                >
+                  {post.files.map((file, i) => (
+                    <SwiperSlide key={i}>
+                      {file.includes("/image/") ? (
+                        <Image
+                          priority
+                          src={file}
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                      ) : (
+                        <video controls className="h-full w-full object-cover">
+                          <source src={file} type="video/mp4" />
+                        </video>
+                      )}
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div>
+            )}
+            <div className="flex justify-evenly flex-wrap">
+              <VoteButton
+                id={post?._id}
+                user={user?._id}
+                upvoters={data ? data?.stats?.upvoters : []}
+              />
+              <Button
+                leftIcon={<PencilSquare className="text-blue" />}
+                colorScheme="gray"
+                className="my-2"
+                onClick={() => router.push(`/post/${post._id}`)}
+              >
+                Comentarii
+              </Button>
+              <ShareButton id={post._id} />
+              <FavoriteButton
+                id={post?._id}
+                user={user?._id}
+                favorites={data ? data.stats?.favorites : []}
+              />
+            </div>
           </div>
-        )}
-        <div className="flex justify-evenly flex-wrap">
-          <VoteButton
-            id={post?._id}
-            user={user?._id}
-            upvoters={data ? data?.stats?.upvoters : []}
-          />
-          <Button
-            leftIcon={<PencilSquare className="text-blue" />}
-            colorScheme="gray"
-            className="my-2"
-            onClick={() => router.push(`/post/${post._id}`)}
-          >
-            Comentarii
-          </Button>
-          <ShareButton id={post._id} />
-          <FavoriteButton
-            id={post?._id}
-            user={user?._id}
-            favorites={data ? data.stats.favorites : []}
-          />
-        </div>
-      </div>
-    </li>
+        </li>
+      )}
+    </>
   );
 };
 
