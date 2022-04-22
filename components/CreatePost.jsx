@@ -75,10 +75,7 @@ const CreatePost = () => {
     const { data } = await axios.post("/api/post", { draft });
     setLoading(false);
     if (data.status === "SUCCESS") {
-      const post = {
-        ...data.post,
-        author: user,
-      };
+      document.getElementById("createPost").reset();
       mutate(
         `/api/feed/${user._id}`,
         fetch(`/api/feed/${user._id}`).then((res) => res.json())
@@ -96,6 +93,7 @@ const CreatePost = () => {
   };
   return (
     <form
+      id="createPost"
       onSubmit={(e) => savePost(e)}
       className="flex flex-col items-center mx-auto w-full md:w-2/3 mt-6 md:mt-0"
     >

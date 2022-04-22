@@ -17,6 +17,10 @@ const VoteButton = ({ id, user, upvoters }) => {
     });
     if (data.status === "SUCCESS") {
       mutate(
+        `/api/feed/${user}`,
+        fetch(`/api/feed/${user}`).then((res) => res.json())
+      );
+      mutate(
         `/api/post/stats/${id}`,
         fetch(`/api/post/stats/${id}`).then((res) => res.json())
       );
@@ -35,6 +39,10 @@ const VoteButton = ({ id, user, upvoters }) => {
       upvoter: user,
     });
     if (data.status === "SUCCESS") {
+      mutate(
+        `/api/feed/${user}`,
+        fetch(`/api/feed/${user}`).then((res) => res.json())
+      );
       mutate(
         `/api/post/stats/${id}`,
         fetch(`/api/post/stats/${id}`).then((res) => res.json())

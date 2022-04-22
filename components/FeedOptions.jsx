@@ -12,7 +12,7 @@ import {
 import SortPosts from "./SortPosts";
 import CreatePost from "./CreatePost";
 
-const FeedOptions = () => {
+const FeedOptions = ({ sortPosts, resetFilters }) => {
   return (
     <div className="sticky z-20 top-0 bg-white shadow-shadow_nav">
       <Accordion allowToggle>
@@ -40,7 +40,7 @@ const FeedOptions = () => {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            <SortPosts />
+            <SortPosts resetFilters={resetFilters} sortPosts={sortPosts} />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
