@@ -8,7 +8,9 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "GET":
       try {
-        const stats = await Post.findById(id).select("upvoters comments");
+        const stats = await Post.findById(id).select(
+          "upvoters comments favorites"
+        );
         res.status(200).json({ status: "SUCCESS", stats });
       } catch (error) {
         res.status(200).json({ status: "ERROR", error });
@@ -17,12 +19,20 @@ export default async function handler(req, res) {
 
     case "PATCH":
       try {
-        const { comment, upvoter } = req.body;
+        const { comment, upvoter, user } = req.body;
         if (upvoter) {
           await Post.findByIdAndUpdate(id, { $push: { upvoters: upvoter } });
         }
         if (comment) {
           await Post.findByIdAndUpdate(id, { $push: { comments: comment } });
+        }
+        if (user) {
+          await Post.findByIdAndUpdate(id, {
+            $push: { favorites: user },
+          });
+          await Account.findByIdAndUpdate(user, {
+            $push: { favorites: id },
+          });
         }
         res.status(200).json({ status: "SUCCESS" });
       } catch (error) {
@@ -32,10 +42,19 @@ export default async function handler(req, res) {
 
     case "PUT":
       try {
-        const { comment, upvoter } = req.body;
+        const { comment, upvoter, user } = req.body;
         if (upvoter) {
           await Post.findByIdAndUpdate(id, { $pull: { upvoters: upvoter } });
         }
+        if (user) {
+          await Post.findByIdAndUpdate(id, {
+            $pull: { favorites: user },
+          });
+          await Account.findByIdAndUpdate(user, {
+            $pull: { favorites: id },
+          });
+        }
+
         res.status(200).json({ status: "SUCCESS" });
       } catch (error) {
         res.status(200).json({ status: "ERROR", error });

@@ -19,6 +19,7 @@ const PostSchema = new mongoose.Schema({
   },
   postedAt: { type: Date, default: Date.now },
   upvoters: [String],
+  favorites: [String],
   title: String,
   desc: String,
   files: [String],

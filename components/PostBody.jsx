@@ -9,7 +9,9 @@ import ShowMoreText from "react-show-more-text";
 
 import TextTransition, { presets } from "react-text-transition";
 
-const PostBody = ({ data, post, lines }) => {
+import PostActions from "./PostActions";
+
+const PostBody = ({ data, post, lines, removePost }) => {
   return (
     <>
       <div className="flex flex-row md:p-3 border-b border-white pb-3 items-center">
@@ -50,6 +52,11 @@ const PostBody = ({ data, post, lines }) => {
             />
           </div>
         </div>
+        <PostActions
+          id={post._id}
+          removePost={removePost}
+          author={post.authorID}
+        />
       </div>
       <div className="flex flex-col md:px-3 pt-3">
         <h1 className="font-bold text-xl ml-3">{post.title}</h1>

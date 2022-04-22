@@ -13,69 +13,27 @@ import { Button, useToast } from "@chakra-ui/react";
 
 import PostBody from "./PostBody";
 import ShareButton from "./ShareButton";
+import FavoriteButton from "./FavoriteButton";
+import VoteButton from "./VoteButton";
 
 import { UserContext } from "../contexts/userContext";
 
-import {
-  ArrowUpSquareFill,
-  FlagFill,
-  PencilSquare,
-  ShareFill,
-  XSquareFill,
-} from "react-bootstrap-icons";
+import { PencilSquare } from "react-bootstrap-icons";
 
 import { useRouter } from "next/router";
 
-const Post = ({ post }) => {
+const Post = ({ post, removePost }) => {
   const router = useRouter();
   const { user } = useContext(UserContext);
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/post/stats/${post._id}`, fetcher, {
     refreshInterval: 60000,
   });
-  const toast = useToast();
-  const upvote = async () => {
-    const { data } = await axios.patch(`/api/post/stats/${post._id}`, {
-      upvoter: user._id,
-    });
-    if (data.status === "SUCCESS") {
-      mutate(
-        `/api/post/stats/${post._id}`,
-        fetch(`/api/post/stats/${post._id}`).then((res) => res.json())
-      );
-    } else {
-      toast({
-        title: `A apărut o eroare. Vă rugam încercați din nou mai târziu!`,
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-      });
-    }
-  };
-
-  const removeVote = async () => {
-    const { data } = await axios.put(`/api/post/stats/${post._id}`, {
-      upvoter: user._id,
-    });
-    if (data.status === "SUCCESS") {
-      mutate(
-        `/api/post/stats/${post._id}`,
-        fetch(`/api/post/stats/${post._id}`).then((res) => res.json())
-      );
-    } else {
-      toast({
-        title: `A apărut o eroare. Vă rugam încercați din nou mai târziu!`,
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-      });
-    }
-  };
 
   return (
     <li className="my-2 md:p-0 p-3 flex flex-col bg-blue shadow-shadow_nav">
       <div className="flex flex-col">
-        <PostBody post={post} data={data} lines={3} />
+        <PostBody removePost={removePost} post={post} data={data} lines={3} />
         {post.files && (
           <div className="md:my-0 my-3">
             <Swiper
@@ -105,25 +63,11 @@ const Post = ({ post }) => {
           </div>
         )}
         <div className="flex justify-evenly flex-wrap">
-          {data && !data.stats.upvoters.includes(user._id) ? (
-            <Button
-              onClick={upvote}
-              leftIcon={<ArrowUpSquareFill className="text-blue" />}
-              colorScheme="gray"
-              className="my-2"
-            >
-              Votează
-            </Button>
-          ) : (
-            <Button
-              onClick={removeVote}
-              leftIcon={<XSquareFill className="text-white" />}
-              colorScheme="red"
-              className="my-2"
-            >
-              Șterge votul
-            </Button>
-          )}
+          <VoteButton
+            id={post?._id}
+            user={user?._id}
+            upvoters={data ? data?.stats?.upvoters : []}
+          />
           <Button
             leftIcon={<PencilSquare className="text-blue" />}
             colorScheme="gray"
@@ -133,13 +77,11 @@ const Post = ({ post }) => {
             Comentarii
           </Button>
           <ShareButton id={post._id} />
-          <Button
-            leftIcon={<FlagFill className="text-blue" />}
-            colorScheme="gray"
-            className="my-2"
-          >
-            Raportează
-          </Button>
+          <FavoriteButton
+            id={post?._id}
+            user={user?._id}
+            favorites={data ? data.stats.favorites : []}
+          />
         </div>
       </div>
     </li>

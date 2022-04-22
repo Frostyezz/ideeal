@@ -13,7 +13,7 @@ import CreatePost from "./CreatePost";
 
 const FeedOptions = ({ addPost }) => {
   return (
-    <div className="sticky z-10 top-0 bg-white shadow-shadow_nav">
+    <div className="sticky z-20 top-0 bg-white shadow-shadow_nav">
       <Accordion allowToggle>
         <AccordionItem>
           <h2>

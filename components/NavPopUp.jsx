@@ -33,7 +33,7 @@ const NavPopUp = ({ showNav }) => {
   };
 
   return (
-    <div className="fixed w-screen h-screen z-20 bg-white flex justify-center items-center flex flex-col pt-4 md:pt-10 animate__animated animate__slideInLeft">
+    <div className="fixed w-screen h-screen z-40 bg-white flex justify-center items-center flex flex-col pt-4 md:pt-10 animate__animated animate__slideInLeft">
       <h1 className="text-6xl font-bold ml-10 md:ml-0 animate__animated animate__fadeIn animate__delay-1s">
         IdeeRO
       </h1>

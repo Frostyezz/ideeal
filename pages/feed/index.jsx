@@ -10,13 +10,17 @@ import Post from "../../components/Post";
 
 const Feed = ({ initialPosts }) => {
   const [posts, setPosts] = useState(initialPosts);
+  const removePost = (id) => {
+    const updated = posts.filter((post) => post._id !== id);
+    setPosts(updated);
+  };
   return (
     <div className="min-h-screen bg-gray">
       <div className="flex flex-col mx-auto w-full md:w-2/4">
         <FeedOptions addPost={(post) => setPosts([...posts, post])} />
         <ul className="flex flex-col">
           {posts.map((post, i) => (
-            <Post key={i} post={post} />
+            <Post key={i} post={post} removePost={removePost} />
           ))}
         </ul>
       </div>

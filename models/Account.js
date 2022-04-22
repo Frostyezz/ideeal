@@ -13,6 +13,7 @@ const AccountSchema = new mongoose.Schema({
   img: String,
   role: String,
   posts: [String],
+  favorites: [String],
   verified: {
     email: Boolean,
     status: String,
