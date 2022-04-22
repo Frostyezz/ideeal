@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import axios from "axios";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
 
-import { Button, useToast } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
 import PostBody from "./PostBody";
 import ShareButton from "./ShareButton";
@@ -22,7 +22,7 @@ import { PencilSquare } from "react-bootstrap-icons";
 
 import { useRouter } from "next/router";
 
-const Post = ({ post, removePost }) => {
+const Post = ({ post }) => {
   const router = useRouter();
   const { user } = useContext(UserContext);
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
@@ -35,12 +35,7 @@ const Post = ({ post, removePost }) => {
       {data?.stats !== null && (
         <li className="my-2 md:p-0 p-3 flex flex-col bg-blue shadow-shadow_nav">
           <div className="flex flex-col">
-            <PostBody
-              removePost={removePost}
-              post={post}
-              data={data}
-              lines={3}
-            />
+            <PostBody post={post} data={data} lines={3} />
             {post.files && (
               <div className="md:my-0 my-3">
                 <Swiper

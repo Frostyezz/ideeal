@@ -12,9 +12,11 @@ import {
 import UploadMultiple from "./UploadMultiple";
 import axios from "axios";
 
+import { mutate } from "swr";
+
 import { UserContext } from "../contexts/userContext";
 
-const CreatePost = ({ addPost }) => {
+const CreatePost = () => {
   const { user } = useContext(UserContext);
   const [files, setFiles] = useState(null);
   const [error, setError] = useState(null);
@@ -50,6 +52,10 @@ const CreatePost = ({ addPost }) => {
       duration: 4000,
       isClosable: true,
     });
+    mutate(
+      `/api/feed/${user._id}`,
+      fetch(`/api/feed/${user._id}`).then((res) => res.json())
+    );
   };
 
   const savePost = async (e) => {
@@ -73,7 +79,10 @@ const CreatePost = ({ addPost }) => {
         ...data.post,
         author: user,
       };
-      addPost(post);
+      mutate(
+        `/api/feed/${user._id}`,
+        fetch(`/api/feed/${user._id}`).then((res) => res.json())
+      );
       setFiles(null);
       toast({
         title: `Postarea a fost publicată cu succes!`,

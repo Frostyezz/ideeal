@@ -15,7 +15,7 @@ import {
   PostcardFill,
 } from "react-bootstrap-icons";
 
-const PostActions = ({ author, id, removePost }) => {
+const PostActions = ({ author, id }) => {
   const { user } = useContext(UserContext);
 
   const router = useRouter();
@@ -27,7 +27,7 @@ const PostActions = ({ author, id, removePost }) => {
           <ThreeDotsVertical className="text-xl " />
         </MenuButton>
         <MenuList>
-          {removePost && (
+          {router.pathname.includes("/post") && (
             <MenuItem
               onClick={() => router.push(`/post/${id}`)}
               icon={<PostcardFill className="text-blue" />}
@@ -40,7 +40,7 @@ const PostActions = ({ author, id, removePost }) => {
               <MenuItem icon={<PencilFill className="text-blue" />}>
                 Modifică
               </MenuItem>
-              <DeletePost id={id} removePost={removePost} />
+              <DeletePost id={id} />
             </>
           )}
           <MenuItem icon={<FlagFill className="text-blue" />}>

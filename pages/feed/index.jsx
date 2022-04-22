@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { jwtVerify } from "jose";
 
@@ -8,21 +8,43 @@ import FeedOptions from "../../components/FeedOptions";
 
 import Post from "../../components/Post";
 
+import useSWR from "swr";
+
+import { ExclamationTriangleFill } from "react-bootstrap-icons";
+
+import { UserContext } from "../../contexts/userContext";
+
 const Feed = ({ initialPosts }) => {
+  const { user } = useContext(UserContext);
+
   const [posts, setPosts] = useState(initialPosts);
-  const removePost = (id) => {
-    const updated = posts.filter((post) => post._id !== id);
-    setPosts(updated);
-  };
+  const [sort, setSort] = useState(null);
+
+  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
+  const { data, error } = useSWR(`/api/feed/${user?._id}`, fetcher, {
+    refreshInterval: 60000,
+  });
+
+  useEffect(() => {
+    if (data) setPosts(data.posts);
+  }, [data]);
+
   return (
     <div className="min-h-screen bg-gray">
       <div className="flex flex-col mx-auto w-full md:w-2/4">
-        <FeedOptions addPost={(post) => setPosts([...posts, post])} />
-        <ul className="flex flex-col">
-          {posts.map((post, i) => (
-            <Post key={i} post={post} removePost={removePost} />
-          ))}
-        </ul>
+        <FeedOptions sortPosts={(posts) => setPosts(posts)} />
+        {posts.length ? (
+          <ul className="flex flex-col">
+            {posts.map((post, i) => (
+              <Post key={i} post={post} />
+            ))}
+          </ul>
+        ) : (
+          <div className="w-full h-screen flex flex-col justify-center items-center">
+            <ExclamationTriangleFill className="text-9xl text-orange" />
+            <h1 className="text-3xl font-bold">Nu există postări!</h1>
+          </div>
+        )}
       </div>
     </div>
   );

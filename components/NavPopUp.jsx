@@ -12,6 +12,7 @@ import {
   PersonXFill,
   FileRichtextFill,
   ShieldFillCheck,
+  StarFill,
 } from "react-bootstrap-icons";
 
 import { useRouter } from "next/router";
@@ -40,7 +41,7 @@ const NavPopUp = ({ showNav }) => {
       <ul className="flex flex-col justify-evenly h-full text-2xl md:text-3xl text-center">
         {!user ? (
           <>
-            <li>
+            <li className="hover:-translate-y-1 transition duration-500">
               <Link href="/">
                 <a
                   onClick={showNav}
@@ -51,7 +52,7 @@ const NavPopUp = ({ showNav }) => {
                 </a>
               </Link>
             </li>
-            <li>
+            <li className="hover:-translate-y-1 transition duration-500">
               <Link href="/signup">
                 <a
                   onClick={showNav}
@@ -62,7 +63,7 @@ const NavPopUp = ({ showNav }) => {
                 </a>
               </Link>
             </li>
-            <li>
+            <li className="hover:-translate-y-1 transition duration-500">
               <Link href="/signin">
                 <a
                   onClick={showNav}
@@ -77,7 +78,7 @@ const NavPopUp = ({ showNav }) => {
         ) : (
           <>
             {user.role !== "USER" && (
-              <li>
+              <li className="hover:-translate-y-1 transition duration-500">
                 <Link href={`/admin`}>
                   <a
                     onClick={showNav}
@@ -89,7 +90,7 @@ const NavPopUp = ({ showNav }) => {
                 </Link>
               </li>
             )}
-            <li>
+            <li className="hover:-translate-y-1 transition duration-500">
               <Link href="/feed">
                 <a
                   onClick={showNav}
@@ -100,7 +101,18 @@ const NavPopUp = ({ showNav }) => {
                 </a>
               </Link>
             </li>
-            <li>
+            <li className="hover:-translate-y-1 transition duration-500">
+              <Link href={`/favorites/${user._id}`}>
+                <a
+                  onClick={showNav}
+                  className="flex justify-center items-center"
+                >
+                  <StarFill className="mr-3 text-blue" />
+                  POSTĂRI FAVORITE
+                </a>
+              </Link>
+            </li>
+            <li className="hover:-translate-y-1 transition duration-500">
               <Link href={`/account/${user._id}`}>
                 <a
                   onClick={showNav}
@@ -111,7 +123,7 @@ const NavPopUp = ({ showNav }) => {
                 </a>
               </Link>
             </li>
-            <li>
+            <li className="hover:-translate-y-1 transition duration-500">
               <div className="flex justify-center items-center">
                 <div
                   onClick={logOut}

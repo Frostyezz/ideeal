@@ -11,7 +11,7 @@ import TextTransition, { presets } from "react-text-transition";
 
 import PostActions from "./PostActions";
 
-const PostBody = ({ data, post, lines, removePost }) => {
+const PostBody = ({ data, post, lines }) => {
   return (
     <>
       <div className="flex flex-row md:p-3 border-b border-white pb-3 items-center">
@@ -52,11 +52,7 @@ const PostBody = ({ data, post, lines, removePost }) => {
             />
           </div>
         </div>
-        <PostActions
-          id={post._id}
-          removePost={removePost}
-          author={post.authorID}
-        />
+        <PostActions id={post._id} author={post.authorID} />
       </div>
       <div className="flex flex-col md:px-3 pt-3">
         <h1 className="font-bold text-xl ml-3">{post.title}</h1>
@@ -68,7 +64,7 @@ const PostBody = ({ data, post, lines, removePost }) => {
           expanded={false}
           truncatedEndingComponent={"... "}
         >
-          <p>{post.desc}</p>
+          {post.desc}
         </ShowMoreText>
       </div>
     </>

@@ -9,9 +9,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 
+import SortPosts from "./SortPosts";
 import CreatePost from "./CreatePost";
 
-const FeedOptions = ({ addPost }) => {
+const FeedOptions = () => {
   return (
     <div className="sticky z-20 top-0 bg-white shadow-shadow_nav">
       <Accordion allowToggle>
@@ -25,7 +26,7 @@ const FeedOptions = ({ addPost }) => {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            <CreatePost addPost={addPost} />
+            <CreatePost />
           </AccordionPanel>
         </AccordionItem>
 
@@ -39,10 +40,7 @@ const FeedOptions = ({ addPost }) => {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            <SortPosts />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

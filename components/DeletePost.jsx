@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { useRouter } from "next/router";
 
 import axios from "axios";
+
+import { mutate } from "swr";
+
+import { UserContext } from "../contexts/userContext";
 
 import { Trash3Fill } from "react-bootstrap-icons";
 
@@ -10,7 +14,9 @@ import DeletePostDialog from "./DeletePostDialog";
 
 import { useDisclosure, useToast, MenuItem } from "@chakra-ui/react";
 
-const DeletePost = ({ removePost, id }) => {
+const DeletePost = ({ id }) => {
+  const { user } = useContext(UserContext);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const router = useRouter();
@@ -24,8 +30,11 @@ const DeletePost = ({ removePost, id }) => {
     const { data } = await axios.delete(`/api/post/${id}`);
     setLoading(false);
     if (data.status === "SUCCESS") {
-      if (removePost) {
-        removePost(id);
+      if (!router.pathname.includes("/post")) {
+        mutate(
+          `/api/feed/${user._id}`,
+          fetch(`/api/feed/${user._id}`).then((res) => res.json())
+        );
         onClose();
         toast({
           title: `Postarea a fost ștearsă!`,
