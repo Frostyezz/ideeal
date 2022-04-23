@@ -63,22 +63,16 @@ const FavoriteButton = ({ favorites, user, id }) => {
   return (
     <>
       {!favorites.includes(user) ? (
-        <Button
-          leftIcon={<StarFill className="text-blue" />}
-          colorScheme="gray"
-          className="my-2"
-          onClick={addToFavorites}
-        >
-          Adaugă la favorite
+        <Button colorScheme="gray" className="my-2" onClick={addToFavorites}>
+          <StarFill />
         </Button>
       ) : (
         <Button
-          leftIcon={<StarFill className="text-white" />}
           colorScheme="red"
           className="my-2"
           onClick={removeFromFavorites}
         >
-          Șterge de la favorite
+          <StarFill className="text-white" />
         </Button>
       )}
     </>

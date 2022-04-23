@@ -6,7 +6,7 @@ import { mutate } from "swr";
 
 import { useToast, Button } from "@chakra-ui/react";
 
-import { ArrowUpSquareFill, XSquareFill } from "react-bootstrap-icons";
+import { ArrowDownSquareFill, ArrowUpSquareFill } from "react-bootstrap-icons";
 
 const VoteButton = ({ id, user, upvoters }) => {
   const toast = useToast();
@@ -60,22 +60,12 @@ const VoteButton = ({ id, user, upvoters }) => {
   return (
     <>
       {!upvoters.includes(user) ? (
-        <Button
-          onClick={upvote}
-          leftIcon={<ArrowUpSquareFill className="text-blue" />}
-          colorScheme="gray"
-          className="my-2"
-        >
-          Votează
+        <Button onClick={upvote} colorScheme="gray" className="my-2">
+          <ArrowUpSquareFill />
         </Button>
       ) : (
-        <Button
-          onClick={removeVote}
-          leftIcon={<XSquareFill className="text-white" />}
-          colorScheme="red"
-          className="my-2"
-        >
-          Șterge votul
+        <Button onClick={removeVote} colorScheme="red" className="my-2">
+          <ArrowDownSquareFill className="text-white" />
         </Button>
       )}
     </>

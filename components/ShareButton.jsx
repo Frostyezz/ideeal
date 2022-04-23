@@ -39,12 +39,8 @@ const ShareButton = ({ id }) => {
   return (
     <Popover placement="top-start">
       <PopoverTrigger>
-        <Button
-          leftIcon={<ShareFill className="text-blue" />}
-          colorScheme="gray"
-          className="my-2"
-        >
-          Distribuie
+        <Button colorScheme="gray" className="my-2">
+          <ShareFill />
         </Button>
       </PopoverTrigger>
       <PopoverContent>

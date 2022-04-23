@@ -33,7 +33,7 @@ const Post = ({ post }) => {
   return (
     <>
       {data?.stats !== null && (
-        <li className="my-2 md:p-0 p-3 flex flex-col bg-blue shadow-shadow_nav">
+        <li className="my-2 md:p-0 p-3 flex flex-col bg-blue shadow-shadow_nav animate__animated animate__fadeIn">
           <div className="flex flex-col">
             <PostBody post={post} data={data} lines={3} />
             {post.files && (
@@ -64,19 +64,18 @@ const Post = ({ post }) => {
                 </Swiper>
               </div>
             )}
-            <div className="flex justify-evenly flex-wrap">
+            <div className="flex justify-evenly w-full md:w-1/2 mx-auto flex-wrap">
               <VoteButton
                 id={post?._id}
                 user={user?._id}
                 upvoters={data ? data?.stats?.upvoters : []}
               />
               <Button
-                leftIcon={<PencilSquare className="text-blue" />}
                 colorScheme="gray"
                 className="my-2"
                 onClick={() => router.push(`/post/${post._id}`)}
               >
-                Comentarii
+                <PencilSquare />
               </Button>
               <ShareButton id={post._id} />
               <FavoriteButton

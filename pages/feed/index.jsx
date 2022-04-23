@@ -24,6 +24,10 @@ const Feed = ({ initialPosts }) => {
     title: null,
     upvotes: null,
     modified: false,
+    date: {
+      from: null,
+      to: null,
+    },
   });
 
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
@@ -52,6 +56,24 @@ const Feed = ({ initialPosts }) => {
           posts.sort((a, b) => a.upvoters.length - b.upvoters.length);
         else posts.sort((a, b) => b.upvoters.length - a.upvoters.length);
       }
+      if (sort.date.from && sort.date.to) {
+        if (+sort.date.from === +sort.date.to) {
+          posts = posts.filter((post) => {
+            const time = new Date(post.postedAt);
+            return (
+              time.getDay() === sort.date.from.getDay() &&
+              time.getMonth() === sort.date.from.getMonth() &&
+              time.getFullYear() === sort.date.from.getFullYear()
+            );
+          });
+        } else {
+          posts = posts.filter(
+            (post) =>
+              new Date(post.postedAt).getTime() >= sort.date.from.getTime() &&
+              new Date(post.postedAt).getTime() <= sort.date.to.getTime()
+          );
+        }
+      }
     }
     return posts;
   }, [initialPosts, data, sort]);
@@ -67,6 +89,10 @@ const Feed = ({ initialPosts }) => {
               title: null,
               upvotes: null,
               modified: false,
+              date: {
+                from: null,
+                to: null,
+              },
             })
           }
         />

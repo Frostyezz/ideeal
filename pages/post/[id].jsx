@@ -68,7 +68,7 @@ const PostPage = ({ post }) => {
               <PostBody data={data} post={post} lines={10} />
             </div>
             {user && (
-              <div className="flex justify-evenly flex-wrap">
+              <div className="flex justify-evenly w-1/2 mx-auto flex-wrap">
                 <VoteButton
                   id={post?._id}
                   user={user?._id}
