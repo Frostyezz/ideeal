@@ -52,7 +52,7 @@ const PostBody = ({ data, post, lines }) => {
             />
           </div>
         </div>
-        <PostActions id={post._id} author={post.authorID} />
+        <PostActions post={post} id={post._id} author={post.authorID} />
       </div>
       <div className="flex flex-col md:px-3 pt-3">
         <h1 className="font-bold text-xl ml-3">{post.title}</h1>

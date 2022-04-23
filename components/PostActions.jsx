@@ -7,15 +7,15 @@ import { UserContext } from "../contexts/userContext";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 
 import DeletePost from "./DeletePost";
+import EditPost from "./EditPost";
 
 import {
   ThreeDotsVertical,
   FlagFill,
-  PencilFill,
   PostcardFill,
 } from "react-bootstrap-icons";
 
-const PostActions = ({ author, id }) => {
+const PostActions = ({ author, id, post }) => {
   const { user } = useContext(UserContext);
 
   const router = useRouter();
@@ -37,9 +37,7 @@ const PostActions = ({ author, id }) => {
           )}
           {user?._id === author && (
             <>
-              <MenuItem icon={<PencilFill className="text-blue" />}>
-                Modifică
-              </MenuItem>
+              <EditPost id={id} post={post} />
               <DeletePost id={id} />
             </>
           )}

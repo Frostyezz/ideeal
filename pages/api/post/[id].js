@@ -19,12 +19,20 @@ export default async function handler(req, res) {
         res.status(200).json({ status: "ERROR", error });
       }
       break;
-
+    case "PATCH":
+      try {
+        const { title, desc, files } = req.body;
+        await Post.findByIdAndUpdate(id, { title, desc, files });
+        res.status(200).json({ status: "SUCCESS" });
+      } catch (error) {
+        res.status(200).json({ status: "ERROR", error });
+      }
+      break;
     case "DELETE":
       try {
         await Post.findByIdAndDelete(id);
         // await Account.updateMany(
-        //   { favorites: { $in: id } },
+        //   { favorites: id },
         //   { favorites: { $pull: id } }
         // );
         res.status(200).json({ status: "SUCCESS" });

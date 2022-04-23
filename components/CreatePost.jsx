@@ -52,10 +52,6 @@ const CreatePost = () => {
       duration: 4000,
       isClosable: true,
     });
-    mutate(
-      `/api/feed/${user._id}`,
-      fetch(`/api/feed/${user._id}`).then((res) => res.json())
-    );
   };
 
   const savePost = async (e) => {
