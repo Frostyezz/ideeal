@@ -37,7 +37,6 @@ const PostMenu = ({ user, setMenu }) => {
   }, [data, sort]);
 
   const changeStatus = async (e, id) => {
-    e.stopPropagation();
     const status = e.target.value;
     const { data } = await axios.patch(`/api/post/status/${id}`, { status });
     if (data.status === "SUCCESS") {
@@ -63,7 +62,7 @@ const PostMenu = ({ user, setMenu }) => {
   };
 
   return (
-    <div className="flex flex-col p-5 shadow-shadow_nav bg-white animate__animated animate__fadeIn">
+    <div className="flex md:w-2/3 flex-col p-5 shadow-shadow_nav bg-white animate__animated animate__fadeIn">
       <h1 className="md:text-3xl text-xl font-bold text-center mb-4">
         Postări pentru {user.location.city}, {user.location.county}
       </h1>
@@ -75,7 +74,7 @@ const PostMenu = ({ user, setMenu }) => {
           </Alert>
           <Select
             placeholder="Sortați după status..."
-            className="border-blue"
+            className="border-blue mb-2"
             onChange={(e) => setSort(e.target.value ? e.target.value : null)}
           >
             <option value="NONE">În așteptare</option>
@@ -115,6 +114,7 @@ const PostMenu = ({ user, setMenu }) => {
                     onChange={(e) => {
                       changeStatus(e, post._id);
                     }}
+                    onClick={(e) => e.stopPropagation()}
                     className="bg-white"
                   >
                     <option value="NONE">În așteptare</option>
