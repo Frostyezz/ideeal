@@ -99,7 +99,7 @@ const Feed = ({ initialPosts }) => {
             })
           }
         />
-        {posts.length ? (
+        {posts?.length ? (
           <ul className="flex flex-col">
             {posts.map((post, i) => (
               <Post key={i} post={post} />

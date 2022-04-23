@@ -5,17 +5,11 @@ import Post from "../../../models/Post";
 export default async function handler(req, res) {
   await dbConnect();
   switch (req.method) {
-    case "GET":
+    case "PUT":
       try {
-        const posts = await Post.find();
-        const updated = [];
-        posts.forEach(async (post) => {
-          const author = await Account.findById(post.authorID).select(
-            "-password"
-          );
-          updated.push({ ...post, author });
-        });
-        res.status(200).json({ status: "SUCCESS", posts: updated });
+        const { location } = req.body;
+        const posts = await Post.find({ location });
+        res.status(200).json({ status: "SUCCESS", count: posts.length });
       } catch (error) {
         res.status(200).json({ status: "ERROR", error });
       }

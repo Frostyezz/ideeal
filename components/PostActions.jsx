@@ -27,7 +27,7 @@ const PostActions = ({ author, id, post }) => {
           <ThreeDotsVertical className="text-xl " />
         </MenuButton>
         <MenuList>
-          {router.pathname.includes("/post") && (
+          {!router.pathname.includes("/post") && (
             <MenuItem
               onClick={() => router.push(`/post/${id}`)}
               icon={<PostcardFill className="text-blue" />}

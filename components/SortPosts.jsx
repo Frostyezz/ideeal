@@ -2,8 +2,10 @@ import React, { useState } from "react";
 
 import { Input, Button, FormLabel, Select, useToast } from "@chakra-ui/react";
 
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ro from "date-fns/locale/ro";
+registerLocale("ro", ro);
 
 const SortPosts = ({ sortPosts, resetFilters }) => {
   const [date, setDate] = useState({ from: null, to: null });
@@ -71,6 +73,7 @@ const SortPosts = ({ sortPosts, resetFilters }) => {
       </FormLabel>
       <div className="flex flex row">
         <DatePicker
+          locale="ro"
           selected={date.from}
           onChange={(newDate) => setDate({ ...date, from: newDate })}
           className="border-blue css-1c6j008"
@@ -78,6 +81,7 @@ const SortPosts = ({ sortPosts, resetFilters }) => {
           onKeyDown={(e) => e.preventDefault()}
         />
         <DatePicker
+          locale="ro"
           selected={date.to}
           onChange={(newDate) => setDate({ ...date, to: newDate })}
           className="border-blue css-1c6j008 ml-1"

@@ -31,10 +31,6 @@ export default async function handler(req, res) {
     case "DELETE":
       try {
         await Post.findByIdAndDelete(id);
-        // await Account.updateMany(
-        //   { favorites: id },
-        //   { favorites: { $pull: id } }
-        // );
         res.status(200).json({ status: "SUCCESS" });
       } catch (error) {
         res.status(200).json({ status: "ERROR", error });

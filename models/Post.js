@@ -23,6 +23,7 @@ const PostSchema = new mongoose.Schema({
   title: String,
   desc: String,
   files: [String],
+  status: { type: String, default: "NONE" },
 });
 
 module.exports = mongoose.models.Post || mongoose.model("Post", PostSchema);

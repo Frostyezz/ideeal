@@ -60,11 +60,11 @@ const VoteButton = ({ id, user, upvoters }) => {
   return (
     <>
       {!upvoters.includes(user) ? (
-        <Button onClick={upvote} colorScheme="gray" className="my-2">
+        <Button onClick={upvote} colorScheme="gray" className="my-2 ">
           <ArrowUpSquareFill />
         </Button>
       ) : (
-        <Button onClick={removeVote} colorScheme="red" className="my-2">
+        <Button onClick={removeVote} colorScheme="red" className="my-2 ">
           <ArrowDownSquareFill className="text-white" />
         </Button>
       )}

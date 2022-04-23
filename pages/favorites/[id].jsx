@@ -89,7 +89,7 @@ const Favorites = ({ initialPosts }) => {
         ) : (
           <div className="w-full h-screen flex flex-col justify-center items-center">
             <ExclamationTriangleFill className="text-9xl text-orange" />
-            <h1 className="text-3xl font-bold">Nu există postări!</h1>
+            <h1 className="text-3xl font-bold">Nu există postări favorite!</h1>
             {sort.modified && (
               <>
                 <span className="my-2">

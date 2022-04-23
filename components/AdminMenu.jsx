@@ -11,6 +11,7 @@ import axios from "axios";
 const AdminMenu = ({ user, setMenu }) => {
   const [requests, setRequests] = useState(null);
   const [mods, setMods] = useState(null);
+  const [posts, setPosts] = useState(null);
   useEffect(() => {
     axios
       .post("/api/account/pending", {
@@ -24,6 +25,11 @@ const AdminMenu = ({ user, setMenu }) => {
         county: user.location.county,
       })
       .then(({ data }) => data.status === "SUCCESS" && setMods(data.count));
+    axios
+      .put("/api/post", {
+        location: user.location,
+      })
+      .then(({ data }) => data.status === "SUCCESS" && setPosts(data.count));
   }, []);
 
   return (
@@ -69,7 +75,12 @@ const AdminMenu = ({ user, setMenu }) => {
           >
             <FileEarmarkPostFill className="text-9xl" />
             <h1 className="text-xl mt-10 font-bold">Gestionare postări</h1>
-            <p>Nu există postări</p>
+            {posts !== null && (
+              <p>
+                {posts ? `Există ${posts}` : "Nu există"}{" "}
+                {posts === 1 ? "postare" : "postări"}.
+              </p>
+            )}
           </div>
         </div>
       </div>
