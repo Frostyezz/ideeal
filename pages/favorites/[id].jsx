@@ -1,26 +1,13 @@
-import React, { useState, useContext, useMemo } from "react";
-
-import { jwtVerify } from "jose";
-
-import * as cookie from "cookie";
+import React, { useState, useMemo } from "react";
 
 import FeedOptions from "../../components/FeedOptions";
-
 import Post from "../../components/Post";
-
-import useSWR from "swr";
-
-import axios from "axios";
-
-import { Button } from "@chakra-ui/react";
 
 import { ExclamationTriangleFill } from "react-bootstrap-icons";
 
-import { UserContext } from "../../contexts/userContext";
+import { Button } from "@chakra-ui/react";
 
-const Feed = ({ initialPosts }) => {
-  const { user } = useContext(UserContext);
-
+const Favorites = ({ initialPosts }) => {
   const [sort, setSort] = useState({
     name: null,
     title: null,
@@ -32,14 +19,8 @@ const Feed = ({ initialPosts }) => {
     },
   });
 
-  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(`/api/feed/${user?._id}`, fetcher, {
-    refreshInterval: 60000,
-  });
-
   const posts = useMemo(() => {
-    if (!data) return initialPosts;
-    const { posts } = data;
+    const posts = initialPosts;
     if (sort.modified) {
       if (sort.name) {
         posts = posts.filter((post) =>
@@ -78,13 +59,13 @@ const Feed = ({ initialPosts }) => {
       }
     }
     return posts;
-  }, [initialPosts, data, sort]);
+  }, [initialPosts, sort]);
 
   return (
     <div className="min-h-screen bg-gray">
       <div className="flex flex-col mx-auto w-full md:w-2/4">
         <FeedOptions
-          create={true}
+          create={false}
           sortPosts={(filters) => setSort(filters)}
           resetFilters={() =>
             setSort({
@@ -142,19 +123,30 @@ const Feed = ({ initialPosts }) => {
 
 export async function getServerSideProps(ctx) {
   try {
-    const secret = process.env.JWT_SECRET;
-    const cookies = cookie.parse(ctx.req.headers.cookie);
-    const jwt = cookies.IdeeROJWT;
-    const { payload } = await jwtVerify(jwt, new TextEncoder().encode(secret));
+    const { id } = ctx.params;
     const baseURL = !process.env.VERCEL_URL
       ? "http://localhost:3000"
       : `https://${process.env.VERCEL_URL}`;
-    const res = await fetch(`${baseURL}/api/feed/${payload.id}`);
+    const res = await fetch(`${baseURL}/api/post/favorites/${id}`);
     const data = await res.json();
-    return { props: { initialPosts: data.posts } };
+    if (data.status === "SUCCESS" && data.posts)
+      return { props: { initialPosts: data.posts } };
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/404",
+      },
+      props: {},
+    };
   } catch (error) {
-    return { props: { initialPosts: [] } };
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/404",
+      },
+      props: {},
+    };
   }
 }
 
-export default Feed;
+export default Favorites;

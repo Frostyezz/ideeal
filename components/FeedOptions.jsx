@@ -12,23 +12,25 @@ import {
 import SortPosts from "./SortPosts";
 import CreatePost from "./CreatePost";
 
-const FeedOptions = ({ sortPosts, resetFilters }) => {
+const FeedOptions = ({ sortPosts, resetFilters, create }) => {
   return (
     <div className="sticky z-20 top-0 bg-white shadow-shadow_nav">
       <Accordion allowToggle>
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box flex="1" textAlign="center">
-                Creează o postare
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <CreatePost />
-          </AccordionPanel>
-        </AccordionItem>
+        {create && (
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box flex="1" textAlign="center">
+                  Creează o postare
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <CreatePost />
+            </AccordionPanel>
+          </AccordionItem>
+        )}
 
         <AccordionItem className="border-b-0">
           <h2>
