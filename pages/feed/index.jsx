@@ -12,6 +12,8 @@ import useSWR from "swr";
 
 import axios from "axios";
 
+import { Button } from "@chakra-ui/react";
+
 import { ExclamationTriangleFill } from "react-bootstrap-icons";
 
 import { UserContext } from "../../contexts/userContext";
@@ -106,6 +108,30 @@ const Feed = ({ initialPosts }) => {
           <div className="w-full h-screen flex flex-col justify-center items-center">
             <ExclamationTriangleFill className="text-9xl text-orange" />
             <h1 className="text-3xl font-bold">Nu există postări!</h1>
+            {sort.modified && (
+              <>
+                <span className="my-2">
+                  Se pare că nicio postare nu respectă filtrele alese.
+                </span>
+                <Button
+                  onClick={() =>
+                    setSort({
+                      name: null,
+                      title: null,
+                      upvotes: null,
+                      modified: false,
+                      date: {
+                        from: null,
+                        to: null,
+                      },
+                    })
+                  }
+                  colorScheme="blue"
+                >
+                  Resetează filtrele
+                </Button>
+              </>
+            )}
           </div>
         )}
       </div>

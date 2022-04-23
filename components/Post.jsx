@@ -18,7 +18,7 @@ import VoteButton from "./VoteButton";
 
 import { UserContext } from "../contexts/userContext";
 
-import { PencilSquare } from "react-bootstrap-icons";
+import { ChatLeftDotsFill } from "react-bootstrap-icons";
 
 import { useRouter } from "next/router";
 
@@ -75,7 +75,7 @@ const Post = ({ post }) => {
                 className="my-2"
                 onClick={() => router.push(`/post/${post._id}`)}
               >
-                <PencilSquare />
+                <ChatLeftDotsFill />
               </Button>
               <ShareButton id={post._id} />
               <FavoriteButton
