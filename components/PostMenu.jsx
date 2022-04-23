@@ -6,6 +6,7 @@ import {
   useToast,
   Alert,
   AlertIcon,
+  CircularProgress,
 } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
@@ -86,6 +87,7 @@ const PostMenu = ({ user, setMenu }) => {
           <ul className="flex flex-col max-h-96 overflow-y-auto no-scrollbar p-3">
             {posts.map((post, i) => (
               <li
+                key={i}
                 onClick={() => router.push(`/post/${post._id}`)}
                 className="animate__animated animate__fadeIn hover:-translate-y-1 transition duration-500 rounded-xl mt-4 flex flex-col md:flex-row text-center md:text-left items-center p-3 bg-blue cursor-pointer shadow-shadow_nav"
               >
