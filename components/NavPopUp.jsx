@@ -25,7 +25,7 @@ const NavPopUp = ({ showNav }) => {
   const router = useRouter();
 
   const logOut = async () => {
-    const { data } = await axios.get("/api/account/logout");
+    const { data } = await axios.post("/api/account/logout");
     if (data.status === "SUCCESS") {
       removeUser();
       showNav();

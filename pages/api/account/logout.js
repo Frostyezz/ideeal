@@ -2,7 +2,7 @@ import { serialize } from "cookie";
 
 export default async function handler(req, res) {
   switch (req.method) {
-    case "GET":
+    case "POST":
       try {
         const serialised = serialize("IdeeROJWT", null, {
           httpOnly: true,
