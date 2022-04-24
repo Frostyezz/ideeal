@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { mutate } from "swr";
 
-import { useToast, Button } from "@chakra-ui/react";
+import { useToast, Button, Tooltip } from "@chakra-ui/react";
 
 import { StarFill } from "react-bootstrap-icons";
 
@@ -63,17 +63,21 @@ const FavoriteButton = ({ favorites, user, id }) => {
   return (
     <>
       {!favorites.includes(user) ? (
-        <Button colorScheme="gray" className="my-2" onClick={addToFavorites}>
-          <StarFill />
-        </Button>
+        <Tooltip hasArrow label="Adaugă la favorite" bg="white" color="black">
+          <Button colorScheme="gray" className="my-2" onClick={addToFavorites}>
+            <StarFill />
+          </Button>
+        </Tooltip>
       ) : (
-        <Button
-          colorScheme="red"
-          className="my-2"
-          onClick={removeFromFavorites}
-        >
-          <StarFill className="text-white" />
-        </Button>
+        <Tooltip hasArrow label="Șterge de la favorite" bg="red" color="white">
+          <Button
+            colorScheme="red"
+            className="my-2"
+            onClick={removeFromFavorites}
+          >
+            <StarFill className="text-white" />
+          </Button>
+        </Tooltip>
       )}
     </>
   );

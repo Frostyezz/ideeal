@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { mutate } from "swr";
 
-import { useToast, Button } from "@chakra-ui/react";
+import { useToast, Button, Tooltip } from "@chakra-ui/react";
 
 import { ArrowDownSquareFill, ArrowUpSquareFill } from "react-bootstrap-icons";
 
@@ -60,13 +60,17 @@ const VoteButton = ({ id, user, upvoters }) => {
   return (
     <>
       {!upvoters.includes(user) ? (
-        <Button onClick={upvote} colorScheme="gray" className="my-2 ">
-          <ArrowUpSquareFill />
-        </Button>
+        <Tooltip hasArrow label="Votează" bg="white" color="black">
+          <Button onClick={upvote} colorScheme="gray" className="my-2 ">
+            <ArrowUpSquareFill />
+          </Button>
+        </Tooltip>
       ) : (
-        <Button onClick={removeVote} colorScheme="red" className="my-2 ">
-          <ArrowDownSquareFill className="text-white" />
-        </Button>
+        <Tooltip hasArrow label="Șterge votul" bg="red" color="white">
+          <Button onClick={removeVote} colorScheme="red" className="my-2 ">
+            <ArrowDownSquareFill className="text-white" />
+          </Button>
+        </Tooltip>
       )}
     </>
   );

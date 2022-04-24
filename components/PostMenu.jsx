@@ -32,7 +32,7 @@ const PostMenu = ({ user, setMenu }) => {
   const posts = useMemo(() => {
     const { posts } = data;
     if (sort) {
-      posts = posts.filter((post) => post?.status === sort);
+      posts = posts.filter((post) => post.status === sort);
     }
     return posts;
   }, [data, sort]);
@@ -87,7 +87,7 @@ const PostMenu = ({ user, setMenu }) => {
           <ul className="flex flex-col max-h-96 overflow-y-auto no-scrollbar p-3">
             {posts.map((post, i) => (
               <li
-                key={i}
+                key={i + 1}
                 onClick={() => router.push(`/post/${post._id}`)}
                 className="animate__animated animate__fadeIn hover:-translate-y-1 transition duration-500 rounded-xl mt-4 flex flex-col md:flex-row text-center md:text-left items-center p-3 bg-blue cursor-pointer shadow-shadow_nav"
               >
@@ -112,6 +112,7 @@ const PostMenu = ({ user, setMenu }) => {
                 <div className="flex flex-col text-center md:ml-auto md:pl-10">
                   <span>Status:</span>
                   <Select
+                    key={post._id}
                     defaultValue={post.status}
                     onChange={(e) => {
                       changeStatus(e, post._id);

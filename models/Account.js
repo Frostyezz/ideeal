@@ -14,6 +14,7 @@ const AccountSchema = new mongoose.Schema({
   role: String,
   posts: [String],
   favorites: [String],
+  friends: [String],
   verified: {
     email: Boolean,
     status: String,

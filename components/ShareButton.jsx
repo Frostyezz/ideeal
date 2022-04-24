@@ -9,6 +9,7 @@ import {
   PopoverArrow,
   PopoverCloseButton,
   Button,
+  Tooltip,
 } from "@chakra-ui/react";
 
 import { ShareFill } from "react-bootstrap-icons";
@@ -39,9 +40,11 @@ const ShareButton = ({ id }) => {
   return (
     <Popover placement="top-start">
       <PopoverTrigger>
-        <Button colorScheme="gray" className="my-2">
-          <ShareFill />
-        </Button>
+        <Tooltip hasArrow label="Distribuie" bg="white" color="black">
+          <Button colorScheme="gray" className="my-2">
+            <ShareFill />
+          </Button>
+        </Tooltip>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />

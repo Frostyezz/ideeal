@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
 
-import { Button } from "@chakra-ui/react";
+import { Button, Tooltip } from "@chakra-ui/react";
 
 import PostBody from "./PostBody";
 import ShareButton from "./ShareButton";
@@ -70,13 +70,15 @@ const Post = ({ post }) => {
                 user={user?._id}
                 upvoters={data ? data?.stats?.upvoters : []}
               />
-              <Button
-                colorScheme="gray"
-                className="my-2"
-                onClick={() => router.push(`/post/${post._id}`)}
-              >
-                <ChatLeftDotsFill />
-              </Button>
+              <Tooltip hasArrow label="Comentarii" bg="white" color="black">
+                <Button
+                  colorScheme="gray"
+                  className="my-2"
+                  onClick={() => router.push(`/post/${post._id}`)}
+                >
+                  <ChatLeftDotsFill />
+                </Button>
+              </Tooltip>
               <ShareButton id={post._id} />
               <FavoriteButton
                 id={post?._id}
