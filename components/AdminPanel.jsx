@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import AdminMenu from "./AdminMenu";
 import RequestsMenu from "./RequestsMenu";

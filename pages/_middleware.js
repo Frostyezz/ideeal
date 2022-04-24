@@ -16,10 +16,7 @@ export default async function middleware(req) {
   if (url.pathname.includes("/admin")) {
     try {
       const verified = await jwtVerify(jwt, new TextEncoder().encode(secret));
-      if (
-        verified.payload.role !== "USER" &&
-        verified.payload.role !== "MODERATOR"
-      ) {
+      if (verified.payload.role !== "USER") {
         return NextResponse.next();
       } else {
         url.pathname = "/feed";
