@@ -43,13 +43,13 @@ const SortPosts = ({ sortPosts, resetFilters }) => {
     <form id="sort" onSubmit={(e) => applyFilters(e)} className="flex flex-col">
       <h1 className="font-bold text-lg text-center mb-5">Sortează după:</h1>
       <div className="flex flex-row">
-        <div className="flex flex-col mr-1">
+        <div className="flex flex-col mr-1 w-full">
           <FormLabel className="my-0" htmlFor="name">
             Numele autorului
           </FormLabel>
           <Input className="border-blue mb-1" id="name" name="name" />
         </div>
-        <div className="flex flex-col ml-1">
+        <div className="flex flex-col ml-1 w-full">
           <FormLabel className="my-0" htmlFor="title">
             Titlul postării
           </FormLabel>

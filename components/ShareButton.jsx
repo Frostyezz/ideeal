@@ -39,13 +39,15 @@ const ShareButton = ({ id }) => {
   }/post/${id}`;
   return (
     <Popover placement="top-start">
-      <PopoverTrigger>
-        <Tooltip hasArrow label="Distribuie" bg="white" color="black">
-          <Button colorScheme="gray" className="my-2">
-            <ShareFill />
-          </Button>
-        </Tooltip>
-      </PopoverTrigger>
+      <Tooltip hasArrow label="Distribuie" bg="white" color="black">
+        <div className="my-2">
+          <PopoverTrigger>
+            <Button colorScheme="gray">
+              <ShareFill />
+            </Button>
+          </PopoverTrigger>
+        </div>
+      </Tooltip>
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton />
