@@ -8,6 +8,7 @@ import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 
 import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
+import ReportPost from "./ReportPost";
 
 import {
   ThreeDotsVertical,
@@ -41,9 +42,7 @@ const PostActions = ({ author, id, post }) => {
               <DeletePost id={id} />
             </>
           )}
-          <MenuItem icon={<FlagFill className="text-blue" />}>
-            Raportează
-          </MenuItem>
+          <ReportPost id={id} />
         </MenuList>
       </Menu>
     </div>

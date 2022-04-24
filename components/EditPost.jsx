@@ -1,7 +1,5 @@
 import React from "react";
 
-import { UserContext } from "../contexts/userContext";
-
 import EditPostModal from "./EditPostModal";
 
 import { PencilFill } from "react-bootstrap-icons";
