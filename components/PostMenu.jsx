@@ -7,9 +7,8 @@ import {
   Alert,
   AlertIcon,
   CircularProgress,
+  useDisclosure,
 } from "@chakra-ui/react";
-
-import { useRouter } from "next/router";
 
 import Moment from "react-moment";
 import "moment/locale/ro";
@@ -17,12 +16,16 @@ import "moment/locale/ro";
 import useSWR, { mutate } from "swr";
 import axios from "axios";
 
+import PostModal from "./PostModal";
+
 const PostMenu = ({ user, setMenu }) => {
   const toast = useToast();
 
-  const router = useRouter();
-
   const [sort, setSort] = useState(null);
+
+  const [selected, setSelected] = useState(null);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/feed/${user?._id}`, fetcher, {
@@ -74,7 +77,7 @@ const PostMenu = ({ user, setMenu }) => {
             Apasă pe postarea pe care dorești să o vizualizezi.
           </Alert>
           <Select
-            placeholder="Sortați după status..."
+            placeholder="Sortează după status..."
             className="border-blue mb-2"
             onChange={(e) => setSort(e.target.value ? e.target.value : null)}
           >
@@ -88,7 +91,10 @@ const PostMenu = ({ user, setMenu }) => {
             {posts.map((post, i) => (
               <li
                 key={i + 1}
-                onClick={() => router.push(`/post/${post._id}`)}
+                onClick={() => {
+                  setSelected(post);
+                  onOpen();
+                }}
                 className="animate__animated animate__fadeIn hover:-translate-y-1 transition duration-500 rounded-xl mt-4 flex flex-col md:flex-row text-center md:text-left items-center p-3 bg-blue cursor-pointer shadow-shadow_nav"
               >
                 <Avatar
@@ -130,6 +136,9 @@ const PostMenu = ({ user, setMenu }) => {
               </li>
             ))}
           </ul>
+          {selected && (
+            <PostModal post={selected} isOpen={isOpen} onClose={onClose} />
+          )}
         </>
       ) : (
         <CircularProgress
