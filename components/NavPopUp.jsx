@@ -13,6 +13,7 @@ import {
   FileRichtextFill,
   ShieldFillCheck,
   StarFill,
+  PeopleFill,
 } from "react-bootstrap-icons";
 
 import { useRouter } from "next/router";
@@ -109,6 +110,17 @@ const NavPopUp = ({ showNav }) => {
                 >
                   <StarFill className="mr-3 text-blue" />
                   POSTĂRI FAVORITE
+                </a>
+              </Link>
+            </li>
+            <li className="hover:-translate-y-1 transition duration-500">
+              <Link href={`/community/${user._id}`}>
+                <a
+                  onClick={showNav}
+                  className="flex justify-center items-center"
+                >
+                  <PeopleFill className="mr-3 text-blue" />
+                  COMUNITATEA MEA
                 </a>
               </Link>
             </li>

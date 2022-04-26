@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 
 import { UserContext } from "../contexts/userContext";
 
+import useSWR from "swr";
+
 import {
   Menu,
   MenuButton,
@@ -19,20 +21,25 @@ import {
 import { mutate } from "swr";
 import axios from "axios";
 
-const UserActions = ({ account }) => {
+const UserActions = ({ id }) => {
   const { user } = useContext(UserContext);
+
+  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
+  const { data, error } = useSWR(`/api/account/${id}`, fetcher, {
+    refreshInterval: 60000,
+  });
 
   const toast = useToast();
 
   const sendRequest = async () => {
     const { data } = await axios.post("/api/account/friends", {
       sender: user._id,
-      recipient: account._id,
+      recipient: id,
     });
     if (data.status === "SUCCESS") {
       mutate(
-        `/api/account/${account._id}`,
-        fetch(`/api/account/${account._id}`).then((res) => res.json())
+        `/api/account/${id}`,
+        fetch(`/api/account/${id}`).then((res) => res.json())
       );
       toast({
         title: `Cererea de prietenie a fost trimisă cu succes!`,
@@ -53,12 +60,12 @@ const UserActions = ({ account }) => {
   const remove = async () => {
     const { data } = await axios.put("/api/account/friends", {
       sender: user._id,
-      recipient: account._id,
+      recipient: id,
     });
     if (data.status === "SUCCESS") {
       mutate(
-        `/api/account/${account._id}`,
-        fetch(`/api/account/${account._id}`).then((res) => res.json())
+        `/api/account/${id}`,
+        fetch(`/api/account/${id}`).then((res) => res.json())
       );
       toast({
         title: `Cererea de prietenie a fost ștearsă cu succes!`,
@@ -76,14 +83,14 @@ const UserActions = ({ account }) => {
     }
   };
 
-  if (user?._id === account._id) return null;
+  if (user?._id === id) return null;
   return (
     <Menu>
       <MenuButton>
         <ThreeDotsVertical className="text-3xl rotate-90 md:rotate-0" />
       </MenuButton>
       <MenuList>
-        {!account.requests?.includes(user?._id) ? (
+        {!data?.user.requests?.includes(user?._id) ? (
           <MenuItem
             onClick={sendRequest}
             icon={<PersonPlusFill className="text-blue text-xl" />}
@@ -96,7 +103,7 @@ const UserActions = ({ account }) => {
             className="text-red-500"
             icon={<PersonDashFill className="text-red-500 text-xl" />}
           >
-            {!account.friends.includes(user._id)
+            {!data?.user.friends.includes(user._id)
               ? "Elimină prietenia"
               : "Șterge cererea de prietenie"}
           </MenuItem>

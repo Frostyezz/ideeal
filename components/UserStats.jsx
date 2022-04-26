@@ -1,13 +1,6 @@
 import React from "react";
 
-import {
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
-  StatArrow,
-  StatGroup,
-} from "@chakra-ui/react";
+import { Stat, StatLabel, StatNumber } from "@chakra-ui/react";
 
 import AnimatedNumber from "react-animated-number";
 
@@ -22,7 +15,7 @@ const UserStats = ({ account }) => {
               component="text"
               value={account.posts.length}
               stepPrecision={0}
-              duration={2000}
+              duration={1500}
             />
           </StatNumber>
         </Stat>
@@ -35,7 +28,7 @@ const UserStats = ({ account }) => {
               component="text"
               value={account.favorites.length}
               stepPrecision={0}
-              duration={600}
+              duration={1500}
             />
           </StatNumber>
         </Stat>
@@ -48,7 +41,7 @@ const UserStats = ({ account }) => {
               component="text"
               value={account?.upvotes}
               stepPrecision={0}
-              duration={600}
+              duration={1500}
             />
           </StatNumber>
         </Stat>
@@ -61,7 +54,7 @@ const UserStats = ({ account }) => {
               component="text"
               value={account?.friends.length}
               stepPrecision={0}
-              duration={600}
+              duration={1500}
             />
           </StatNumber>
         </Stat>
@@ -74,7 +67,7 @@ const UserStats = ({ account }) => {
               component="text"
               value={account?.comments}
               stepPrecision={0}
-              duration={600}
+              duration={1500}
             />
           </StatNumber>
         </Stat>
@@ -87,7 +80,7 @@ const UserStats = ({ account }) => {
               component="text"
               value={account?.replies}
               stepPrecision={0}
-              duration={600}
+              duration={1500}
             />
           </StatNumber>
         </Stat>

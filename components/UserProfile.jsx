@@ -35,7 +35,7 @@ const UserProfile = ({ account }) => {
           </div>
         </div>
         <div className="md:ml-auto md:my-auto ">
-          <UserActions account={account} />
+          <UserActions id={account._id} />
         </div>
       </div>
       <UserStats account={account} />
