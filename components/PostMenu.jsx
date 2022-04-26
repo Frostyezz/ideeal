@@ -33,7 +33,7 @@ const PostMenu = ({ user, setMenu }) => {
   });
 
   const posts = useMemo(() => {
-    const { posts } = data;
+    const { posts } = data ? data : [];
     if (sort) {
       posts = posts.filter((post) => post.status === sort);
     }

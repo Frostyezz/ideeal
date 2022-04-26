@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+
+import useSWR from "swr";
 
 import UserProfile from "../../components/UserProfile";
 
 const Account = ({ account }) => {
+  const fetcher = async (url) => await axios.get(url).then((res) => res.data);
+  const { data, error } = useSWR(`/api/account/${account._id}`, fetcher, {
+    refreshInterval: 60000,
+  });
+  const [profile, setProfile] = useState(
+    data?.status === "SUCCESS" ? data.user : account
+  );
   return (
     <div className="flex flex-col min-h-screen md:justify-center items-center">
-      <UserProfile account={account} />
+      <UserProfile account={profile} />
     </div>
   );
 };

@@ -15,6 +15,7 @@ const AccountSchema = new mongoose.Schema({
   posts: [String],
   favorites: [String],
   friends: [String],
+  requests: [String],
   upvotes: { type: Number, default: 0 },
   comments: { type: Number, default: 0 },
   replies: { type: Number, default: 0 },

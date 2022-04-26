@@ -34,7 +34,7 @@ export default async function handler(req, res) {
             });
           } else {
             await Account.findByIdAndUpdate(comment.authorID, {
-              $inc: { upvotes: 1 },
+              $inc: { comments: 1 },
             });
           }
         }
