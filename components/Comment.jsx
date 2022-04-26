@@ -21,6 +21,7 @@ const Comment = ({ comment, id }) => {
     refreshInterval: 120000,
   });
   const toast = useToast();
+
   const sendReply = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -74,7 +75,7 @@ const Comment = ({ comment, id }) => {
               <div className="flex flex-row">
                 <h1 className="font-bold">{`${data.user.firstName} ${data.user.lastName}`}</h1>
                 {data.user.role !== "USER" && (
-                  <div className="bg-orange ml-2 rounded-xl px-2">
+                  <div className="bg-orange ml-2 rounded-xl px-2 h-6 my-auto">
                     {data.user.role.replace("_", " ")}
                   </div>
                 )}

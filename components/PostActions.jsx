@@ -10,11 +10,7 @@ import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
 import ReportPost from "./ReportPost";
 
-import {
-  ThreeDotsVertical,
-  FlagFill,
-  PostcardFill,
-} from "react-bootstrap-icons";
+import { ThreeDotsVertical, PostcardFill } from "react-bootstrap-icons";
 
 const PostActions = ({ author, id, post }) => {
   const { user } = useContext(UserContext);

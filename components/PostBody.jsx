@@ -1,5 +1,7 @@
 import React from "react";
 
+import Link from "next/link";
+
 import Moment from "react-moment";
 import "moment/locale/ro";
 
@@ -24,9 +26,11 @@ const PostBody = ({ data, post, lines }) => {
 
         <div className="flex flex-col">
           <div className="flex flex-row">
-            <h1 className="font-bold">{`${post.author.firstName} ${post.author.lastName}`}</h1>
+            <Link href={`/account/${post.authorID}`}>
+              <a className="font-bold">{`${post.author.firstName} ${post.author.lastName}`}</a>
+            </Link>
             {post.author.role !== "USER" && (
-              <span className="bg-orange ml-2 rounded-xl px-2">
+              <span className="bg-orange ml-2 rounded-xl px-2 h-6 my-auto">
                 {post.author.role.replace("_", " ")}
               </span>
             )}

@@ -54,7 +54,7 @@ const CreateComment = ({ id }) => {
         />
         <h1 className="font-bold">{`${user.firstName} ${user.lastName}`}</h1>
         {user.role !== "USER" && (
-          <span className="bg-orange ml-2 rounded-xl px-2">
+          <span className="bg-orange ml-2 rounded-xl px-2 h-6 my-auto">
             {user.role.replace("_", " ")}
           </span>
         )}

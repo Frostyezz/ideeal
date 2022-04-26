@@ -22,9 +22,21 @@ export default async function handler(req, res) {
         const { comment, upvoter, user } = req.body;
         if (upvoter) {
           await Post.findByIdAndUpdate(id, { $push: { upvoters: upvoter } });
+          await Account.findByIdAndUpdate(upvoter, {
+            $inc: { upvotes: 1 },
+          });
         }
         if (comment) {
           await Post.findByIdAndUpdate(id, { $push: { comments: comment } });
+          if ("reply" in comment) {
+            await Account.findByIdAndUpdate(comment.authorID, {
+              $inc: { replies: 1 },
+            });
+          } else {
+            await Account.findByIdAndUpdate(comment.authorID, {
+              $inc: { upvotes: 1 },
+            });
+          }
         }
         if (user) {
           await Post.findByIdAndUpdate(id, {
@@ -45,6 +57,9 @@ export default async function handler(req, res) {
         const { comment, upvoter, user } = req.body;
         if (upvoter) {
           await Post.findByIdAndUpdate(id, { $pull: { upvoters: upvoter } });
+          await Account.findByIdAndUpdate(upvoter, {
+            $inc: { upvotes: -1 },
+          });
         }
         if (user) {
           await Post.findByIdAndUpdate(id, {

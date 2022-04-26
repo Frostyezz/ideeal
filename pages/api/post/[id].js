@@ -30,7 +30,10 @@ export default async function handler(req, res) {
       break;
     case "DELETE":
       try {
-        await Post.findByIdAndDelete(id);
+        const deleted = await Post.findByIdAndDelete(id);
+        await Account.findByIdAndUpdate(deleted.authorID, {
+          $pull: { posts: id },
+        });
         res.status(200).json({ status: "SUCCESS" });
       } catch (error) {
         res.status(200).json({ status: "ERROR", error });
