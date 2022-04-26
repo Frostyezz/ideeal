@@ -83,14 +83,15 @@ const UserActions = ({ id }) => {
     }
   };
 
-  if (user?._id === id) return null;
+  if (user?._id === id || !user) return null;
   return (
     <Menu>
       <MenuButton>
         <ThreeDotsVertical className="text-3xl rotate-90 md:rotate-0" />
       </MenuButton>
       <MenuList>
-        {!data?.user.requests?.includes(user?._id) ? (
+        {!data?.user.requests?.includes(user?._id) &&
+        !data?.user.friends?.includes(user?._id) ? (
           <MenuItem
             onClick={sendRequest}
             icon={<PersonPlusFill className="text-blue text-xl" />}
@@ -103,7 +104,7 @@ const UserActions = ({ id }) => {
             className="text-red-500"
             icon={<PersonDashFill className="text-red-500 text-xl" />}
           >
-            {!data?.user.friends.includes(user._id)
+            {data?.user.friends.includes(user._id)
               ? "Elimină prietenia"
               : "Șterge cererea de prietenie"}
           </MenuItem>
