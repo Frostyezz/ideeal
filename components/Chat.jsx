@@ -24,7 +24,6 @@ const Chat = ({ recipient, user }) => {
         if (data.status === "SUCCESS") {
           setChat(data.chat);
 
-          Pusher.logToConsole = true;
           const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
             cluster: "eu",
           });
