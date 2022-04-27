@@ -8,7 +8,7 @@ export default async function middleware(req) {
 
   const jwt = cookies.IdeeROJWT;
 
-  const protectedURLS = ["/feed", "/favorites"];
+  const protectedURLS = ["/feed", "/favorites", "/community"];
   const publicURLS = ["/", "/signup", "/signin"];
 
   const url = req.nextUrl.clone();
@@ -28,7 +28,7 @@ export default async function middleware(req) {
     }
   }
 
-  if (url.pathname.includes("/post")) {
+  if (url.pathname.includes("/post") || url.pathname.includes("/account")) {
     return NextResponse.next();
   }
 

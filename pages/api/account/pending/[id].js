@@ -14,6 +14,8 @@ export default async function handler(req, res) {
           "verified.status": "APPROVED",
           joined: new Date(),
           role: "USER",
+          requests: [],
+          friends: [],
         });
         const html = `
             <body>

@@ -1,5 +1,6 @@
 import dbConnect from "../../../../util/dbConnect";
 import Account from "../../../../models/Account";
+import Chat from "../../../../models/Chat";
 
 export default async function handler(req, res) {
   await dbConnect();
@@ -17,6 +18,11 @@ export default async function handler(req, res) {
             $push: { friends: sender },
             $pull: { requests: sender },
           });
+          const chat = new Chat({
+            users: [sender, recipient],
+            messages: [],
+          });
+          await chat.save();
         } else {
           await Account.findByIdAndUpdate(recipient, {
             $push: { requests: sender },
@@ -39,6 +45,7 @@ export default async function handler(req, res) {
           await Account.findByIdAndUpdate(recipient, {
             $pull: { friends: sender },
           });
+          await Chat.findOneAndDelete({ $all: { users: [sender, recipient] } });
         } else {
           await Account.findByIdAndUpdate(recipient, {
             $pull: { requests: sender },
