@@ -11,10 +11,6 @@ import axios from "axios";
 
 import Pusher from "pusher-js";
 
-const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
-  cluster: "eu",
-});
-
 const Chat = ({ recipient, user }) => {
   const [chat, setChat] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -27,22 +23,27 @@ const Chat = ({ recipient, user }) => {
       .then(({ data }) => {
         if (data.status === "SUCCESS") {
           setChat(data.chat);
+
+          Pusher.logToConsole = true;
+          const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
+            cluster: "eu",
+          });
+          const channel = pusher.subscribe(data?.chat._id);
+          channel.bind("message", function (data) {
+            const message = JSON.parse(data.message);
+            const messages = chat.messages;
+            messages.push(message);
+            setChat({
+              ...chat,
+              messages,
+            });
+          });
         }
       });
   }, [recipient]);
 
   useEffect(() => {
     if (chat && "messages" in chat) {
-      const channel = pusher.subscribe(chat._id);
-      channel.bind("message", function (data) {
-        const message = JSON.parse(data.message);
-        const messages = chat.messages;
-        messages.push(message);
-        setChat({
-          ...chat,
-          messages,
-        });
-      });
     }
   }, [chat]);
 
