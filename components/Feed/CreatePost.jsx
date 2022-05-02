@@ -9,12 +9,12 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
-import UploadMultiple from "./UploadMultiple";
+import UploadMultiple from "../Upload/UploadMultiple";
 import axios from "axios";
 
 import { mutate } from "swr";
 
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 
 const CreatePost = () => {
   const { user } = useContext(UserContext);

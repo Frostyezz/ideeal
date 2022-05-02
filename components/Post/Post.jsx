@@ -16,7 +16,7 @@ import ShareButton from "./ShareButton";
 import FavoriteButton from "./FavoriteButton";
 import VoteButton from "./VoteButton";
 
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 
 import { ChatLeftDotsFill } from "react-bootstrap-icons";
 

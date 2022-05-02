@@ -18,7 +18,7 @@ import {
 
 import { useRouter } from "next/router";
 
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 
 const NavPopUp = ({ showNav }) => {
   const { user, removeUser } = useContext(UserContext);

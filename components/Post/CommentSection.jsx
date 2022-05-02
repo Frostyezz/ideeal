@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 
-import { Avatar, Input, Button, useToast } from "@chakra-ui/react";
-
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 
 import Comment from "./Comment";
 

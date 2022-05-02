@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 
 import useSWR from "swr";
 
@@ -12,7 +12,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import {
-  ChatDotsFill,
   PersonDashFill,
   PersonPlusFill,
   ThreeDotsVertical,
@@ -109,9 +108,6 @@ const UserActions = ({ id }) => {
               : "Șterge cererea de prietenie"}
           </MenuItem>
         )}
-        <MenuItem icon={<ChatDotsFill className="text-blue text-xl" />}>
-          Trimite mesaj
-        </MenuItem>
       </MenuList>
     </Menu>
   );

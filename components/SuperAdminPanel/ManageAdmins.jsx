@@ -11,7 +11,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import regions from "../data/regions.json";
+import regions from "../../data/regions.json";
 import axios from "axios";
 
 import Moment from "react-moment";

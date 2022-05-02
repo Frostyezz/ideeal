@@ -9,7 +9,7 @@ import Message from "./Message";
 import { Avatar, Input, Button } from "@chakra-ui/react";
 import axios from "axios";
 
-import { useChannel } from "../hooks/useChannel";
+import { useChannel } from "../../hooks/useChannel";
 
 const Chat = ({ recipient, chat, user }) => {
   const [messages, setMessages] = useState(chat?.messages);

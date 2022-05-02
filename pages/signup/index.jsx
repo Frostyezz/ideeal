@@ -9,11 +9,11 @@ import { Pagination, Autoplay } from "swiper";
 
 import Image from "next/image";
 
-import SignUpS1 from "../../components/SignUpS1";
-import SignUpS2 from "../../components/SignUpS2";
-import SignUpS3 from "../../components/SignUpS3";
-import SignUpS4 from "../../components/SignUpS4";
-import SignUpS5 from "../../components/SignUpS5";
+import SignUpS1 from "../../components/SignUp/SignUpS1";
+import SignUpS2 from "../../components/SignUp/SignUpS2";
+import SignUpS3 from "../../components/SignUp/SignUpS3";
+import SignUpS4 from "../../components/SignUp/SignUpS4";
+import SignUpS5 from "../../components/SignUp/SignUpS5";
 
 const SignUp = () => {
   const [error, setError] = useState(null);

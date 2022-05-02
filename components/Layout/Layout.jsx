@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import Head from "next/head";
 
-import Navbar from "./Navbar";
-import NavPopUp from "./NavPopUp";
+import Navbar from "../Navbar/Navbar";
+import NavPopUp from "../Navbar/NavPopUp";
 
 const Layout = ({ children }) => {
   const [nav, showNav] = useState(false);

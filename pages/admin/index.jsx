@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 
 import { UserContext } from "../../contexts/userContext";
 
-import AdminPanel from "../../components/AdminPanel";
-import SuperAdminPanel from "../../components/SuperAdminPanel";
-import ModPanel from "../../components/ModPanel";
+import AdminPanel from "../../components/AdminPanel/AdminPanel";
+import SuperAdminPanel from "../../components/SuperAdminPanel/SuperAdminPanel";
+import ModPanel from "../../components/ModPanel/ModPanel";
 
 const Admin = () => {
   const router = useRouter();

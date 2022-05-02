@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import { useRouter } from "next/router";
 
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 

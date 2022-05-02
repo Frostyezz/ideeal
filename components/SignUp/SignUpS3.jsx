@@ -10,7 +10,7 @@ import {
   CircularProgress,
 } from "@chakra-ui/react";
 
-import Upload from "../components/Upload";
+import Upload from "../../components/Upload/Upload";
 import axios from "axios";
 
 const SignUpS3 = ({ error, setFiles, files, saveUser, loading }) => {

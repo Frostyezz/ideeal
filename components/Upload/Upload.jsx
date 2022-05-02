@@ -1,36 +1,40 @@
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { Center, useColorModeValue, Icon } from "@chakra-ui/react";
+import { Center, useColorModeValue } from "@chakra-ui/react";
 
-export default function UploadMultiple({ onFileAccepted, text }) {
+export default function Upload({ onFileAccepted, text }) {
   const onDrop = useCallback(
     (acceptedFiles) => {
-      onFileAccepted(acceptedFiles);
+      onFileAccepted(acceptedFiles[0]);
     },
     [onFileAccepted]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: "image/*, video/*",
-    maxFiles: 5,
-    multiple: true,
+    accept: "image/*",
+    maxFiles: 1,
+    multiple: false,
   });
 
   const dropText = isDragActive ? "" : text;
 
   const activeBg = useColorModeValue("gray.100", "gray.600");
+  const borderColor = useColorModeValue(
+    isDragActive ? "teal.300" : "gray.300",
+    isDragActive ? "teal.500" : "gray.500"
+  );
 
   return (
     <Center
-      className="w-full border-blue"
       p={10}
       cursor="pointer"
       bg={isDragActive ? activeBg : "transparent"}
       _hover={{ bg: activeBg }}
       transition="background-color 0.2s ease"
       borderRadius={4}
-      border="2px dashed"
+      border="3px dashed"
+      borderColor={borderColor}
       {...getRootProps()}
     >
       <input {...getInputProps()} />

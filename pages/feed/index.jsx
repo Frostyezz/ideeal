@@ -4,9 +4,9 @@ import { jwtVerify } from "jose";
 
 import * as cookie from "cookie";
 
-import FeedOptions from "../../components/FeedOptions";
+import FeedOptions from "../../components/Feed/FeedOptions";
 
-import Post from "../../components/Post";
+import Post from "../../components/Post/Post";
 
 import useSWR from "swr";
 

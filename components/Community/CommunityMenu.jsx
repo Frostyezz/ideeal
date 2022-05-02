@@ -42,12 +42,12 @@ const CommunityMenu = ({ user, setChat }) => {
       <Tabs isLazy colorScheme="blue" className="mt-3">
         <TabList>
           <Tooltip bg="white" color="black" hasArrow label="Conversații">
-            <Tab>
+            <Tab _focus={{}}>
               <ChatDotsFill className="text-xl" />
             </Tab>
           </Tooltip>
           <Tooltip bg="white" color="black" hasArrow label="Prieteni">
-            <Tab>
+            <Tab _focus={{}}>
               <PeopleFill className="text-xl" />
             </Tab>
           </Tooltip>
@@ -57,7 +57,7 @@ const CommunityMenu = ({ user, setChat }) => {
             hasArrow
             label="Cereri de prietenie"
           >
-            <Tab>
+            <Tab _focus={{}}>
               <PersonPlusFill className="text-xl" />
             </Tab>
           </Tooltip>
@@ -67,7 +67,11 @@ const CommunityMenu = ({ user, setChat }) => {
             <ChatsTab user={user} setChat={setChat} friends={data?.friends} />
           </TabPanel>
           <TabPanel className="px-0 ">
-            <FriendsTab id={user._id} friends={data?.friends} />
+            <FriendsTab
+              setChat={setChat}
+              id={user._id}
+              friends={data?.friends}
+            />
           </TabPanel>
           <TabPanel className="px-0 ">
             <RequestsTab id={user._id} requests={data?.requests} />

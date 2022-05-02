@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 
-import FeedOptions from "../../components/FeedOptions";
-import Post from "../../components/Post";
+import FeedOptions from "../../components/Feed/FeedOptions";
+import Post from "../../components/Post/Post";
 
 import { ExclamationTriangleFill } from "react-bootstrap-icons";
 

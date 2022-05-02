@@ -1,6 +1,6 @@
 import React from "react";
 
-import UserProfile from "../../components/UserProfile";
+import UserProfile from "../../components/UserProfile/UserProfile";
 
 const Account = ({ account }) => {
   return (

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import { ChatDotsFill } from "react-bootstrap-icons";
 
-import CommunityMenu from "../../components/CommunityMenu";
-import Chat from "../../components/Chat";
+import CommunityMenu from "../../components/Community/CommunityMenu";
+import Chat from "../../components/Community/Chat";
 
 const Community = ({ user }) => {
   const [chat, setChat] = useState(null);

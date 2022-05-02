@@ -6,9 +6,9 @@ import axios from "axios";
 
 import { mutate } from "swr";
 
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 
-import UploadMultiple from "./UploadMultiple";
+import UploadMultiple from "../Upload/UploadMultiple";
 
 import {
   Modal,
@@ -148,10 +148,10 @@ const EditPostModal = ({ isOpen, onClose, post, id }) => {
               ) : null}
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
+              <Button colorScheme="gray" mr={3} onClick={onClose}>
                 Anulează
               </Button>
-              <Button type="submit" isLoading={loading} variant="ghost">
+              <Button type="submit" isLoading={loading} colorScheme="blue">
                 Salvează
               </Button>
             </ModalFooter>

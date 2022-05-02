@@ -7,7 +7,7 @@ import "moment/locale/ro";
 
 import ShowMoreText from "react-show-more-text";
 
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 
 import useSWR, { mutate } from "swr";
 import axios from "axios";

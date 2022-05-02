@@ -9,10 +9,10 @@ import {
   Select,
 } from "@chakra-ui/react";
 
-import Upload from "../components/Upload";
+import Upload from "../Upload/Upload";
 import axios from "axios";
 
-import regions from "../data/regions.json";
+import regions from "../../data/regions.json";
 
 const counties = Object.keys(regions).map((key) => key);
 

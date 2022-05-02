@@ -18,7 +18,7 @@ import { PersonDashFill } from "react-bootstrap-icons";
 import axios from "axios";
 import { mutate } from "swr";
 
-const FriendsTab = ({ friends, id }) => {
+const FriendsTab = ({ friends, id, setChat }) => {
   const toast = useToast();
 
   const remove = async (sender) => {
@@ -31,6 +31,7 @@ const FriendsTab = ({ friends, id }) => {
         `/api/account/friends/${id}`,
         fetch(`/api/account/friends/${id}`).then((res) => res.json())
       );
+      setChat(null);
       toast({
         title: `Cererea de prietenie a fost ștearsă cu succes!`,
         status: "success",

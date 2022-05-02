@@ -45,7 +45,7 @@ export default async function handler(req, res) {
           await Account.findByIdAndUpdate(recipient, {
             $pull: { friends: sender },
           });
-          await Chat.findOneAndDelete({ $all: { users: [sender, recipient] } });
+          //await Chat.findOneAndDelete({ users: [sender, recipient] });
         } else {
           await Account.findByIdAndUpdate(recipient, {
             $pull: { requests: sender },

@@ -4,7 +4,7 @@ import { mutate } from "swr";
 
 import { Avatar, Textarea, Button, useToast } from "@chakra-ui/react";
 
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 import axios from "axios";
 import { SendFill } from "react-bootstrap-icons";
 

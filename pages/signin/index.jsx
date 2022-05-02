@@ -11,10 +11,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper";
 
-import SignInForm from "../../components/SignInForm";
-import ResetPasswordS1 from "../../components/ResetPasswordS1";
-import ResetPasswordS2 from "../../components/ResetPasswordS2";
-import ResetPasswordS3 from "../../components/ResetPasswordS3";
+import SignInForm from "../../components/SignIn/SignInForm";
+import ResetPasswordS1 from "../../components/SignIn/ResetPasswordS1";
+import ResetPasswordS2 from "../../components/SignIn/ResetPasswordS2";
+import ResetPasswordS3 from "../../components/SignIn/ResetPasswordS3";
 
 import Image from "next/image";
 const SignIn = () => {

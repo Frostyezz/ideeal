@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { mutate } from "swr";
 
-import { UserContext } from "../contexts/userContext";
+import { UserContext } from "../../contexts/userContext";
 
 import { Trash3Fill } from "react-bootstrap-icons";
 

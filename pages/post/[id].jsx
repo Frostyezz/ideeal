@@ -5,11 +5,11 @@ import Image from "next/image";
 import axios from "axios";
 import useSWR from "swr";
 
-import PostBody from "../../components/PostBody";
-import CommentSection from "../../components/CommentSection";
-import ShareButton from "../../components/ShareButton";
-import FavoriteButton from "../../components/FavoriteButton";
-import VoteButton from "../../components/VoteButton";
+import PostBody from "../../components/Post/PostBody";
+import CommentSection from "../../components/Post/CommentSection";
+import ShareButton from "../../components/Post/ShareButton";
+import FavoriteButton from "../../components/Post/FavoriteButton";
+import VoteButton from "../../components/Post/VoteButton";
 import NotFound from "../404";
 
 import { UserContext } from "../../contexts/userContext";
