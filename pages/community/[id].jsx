@@ -10,7 +10,7 @@ const Community = ({ user }) => {
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="md:w-4/5 w-full flex md:flex-row flex-col bg-white shadow-shadow_nav">
-        <CommunityMenu user={user} setChat={(id) => setChat(id)} />
+        <CommunityMenu user={user} setChat={setChat} />
         <div className="md:w-2/3 ">
           {chat ? (
             <Chat chat={chat} recipient={chat?.recipient} user={user} />

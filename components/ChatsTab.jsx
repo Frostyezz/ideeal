@@ -16,10 +16,10 @@ import { ChatDotsFill } from "react-bootstrap-icons";
 import axios from "axios";
 
 const ChatsTab = ({ friends, setChat, user }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(null);
 
   const openChat = async (friend) => {
-    setLoading(true);
+    setLoading(friend._id);
     const { data } = await axios.post("/api/chat", {
       sender: user._id,
       recipient: friend._id,
@@ -72,7 +72,7 @@ const ChatsTab = ({ friends, setChat, user }) => {
             color="black"
           >
             <Button
-              isLoading={loading}
+              isLoading={loading === friend._id}
               onClick={() => openChat(friend)}
               colorScheme="blue"
               size="sm"

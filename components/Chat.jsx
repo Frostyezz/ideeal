@@ -13,6 +13,7 @@ import { useChannel } from "../hooks/useChannel";
 
 const Chat = ({ recipient, chat, user }) => {
   const [messages, setMessages] = useState(chat?.messages);
+  useEffect(() => setMessages(chat?.messages), [recipient]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
   let messageEnd = null;
@@ -55,7 +56,7 @@ const Chat = ({ recipient, chat, user }) => {
         </Link>
       </div>
       <div className="overflow-y-auto no-scrollbar h-96 p-3 w-full">
-        {messages.map((message, i) => (
+        {messages?.map((message, i) => (
           <Message
             key={i}
             isUser={message.authorID === user._id}
