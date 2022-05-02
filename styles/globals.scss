@@ -16,6 +16,10 @@ body {
   min-height: min-content;
 }
 
+.max-mobile {
+  max-width: 200px;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

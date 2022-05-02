@@ -19,7 +19,9 @@ const Message = ({ isUser, user, recipient, message }) => {
         src={isUser ? user.img : recipient.img}
         className="mx-2 my-auto"
       />
-      <p className="rounded-xl bg-blue shadow p-2 max-w-xs">{message}</p>
+      <p className="rounded-xl bg-blue shadow p-2 md:max-w-xs max-mobile">
+        {message}
+      </p>
     </div>
   );
 };

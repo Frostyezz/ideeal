@@ -77,6 +77,7 @@ const Chat = ({ recipient, chat, user }) => {
         className="mt-auto flex flex-row m-2"
       >
         <Input
+          autoComplete="off"
           isRequired
           ref={inputRef}
           className="border-blue mr-2"

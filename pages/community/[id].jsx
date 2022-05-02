@@ -8,7 +8,7 @@ import Chat from "../../components/Chat";
 const Community = ({ user }) => {
   const [chat, setChat] = useState(null);
   return (
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="min-h-screen flex justify-center md:items-center md:pt-0 pt-20">
       <div className="md:w-4/5 w-full flex md:flex-row flex-col bg-white shadow-shadow_nav">
         <CommunityMenu user={user} setChat={setChat} />
         <div className="md:w-2/3 ">
