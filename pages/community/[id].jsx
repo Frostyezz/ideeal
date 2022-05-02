@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { ChatDotsFill } from "react-bootstrap-icons";
+
 import CommunityMenu from "../../components/CommunityMenu";
 import Chat from "../../components/Chat";
 
@@ -10,7 +12,16 @@ const Community = ({ user }) => {
       <div className="md:w-4/5 w-full flex md:flex-row flex-col bg-white shadow-shadow_nav">
         <CommunityMenu user={user} setChat={(id) => setChat(id)} />
         <div className="md:w-2/3 ">
-          <Chat chat={chat} recipient={chat?.recipient} user={user} />
+          {chat ? (
+            <Chat chat={chat} recipient={chat?.recipient} user={user} />
+          ) : (
+            <div className="w-full h-full my-5 md:my-0 flex flex-col justify-center items-center">
+              <ChatDotsFill className="text-blue text-9xl mb-5" />
+              <h1 className="text-center">
+                Deschide o conversație pentru a trimite mesaje.
+              </h1>
+            </div>
+          )}
         </div>
       </div>
     </div>

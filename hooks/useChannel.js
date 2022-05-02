@@ -6,26 +6,28 @@ const ably = new Ably.Realtime.Promise({
 });
 
 export function useChannel(channelName, callbackOnMessage) {
-  const channel = ably.channels.get(channelName);
+  if (channelName) {
+    const channel = ably.channels.get(channelName);
 
-  const onMount = () => {
-    channel.subscribe((msg) => {
-      callbackOnMessage(msg);
-    });
-  };
-
-  const onUnmount = () => {
-    channel.unsubscribe();
-  };
-
-  const useEffectHook = () => {
-    onMount();
-    return () => {
-      onUnmount();
+    const onMount = () => {
+      channel.subscribe((msg) => {
+        callbackOnMessage(msg);
+      });
     };
-  };
 
-  useEffect(useEffectHook);
+    const onUnmount = () => {
+      channel.unsubscribe();
+    };
 
-  return [channel, ably];
+    const useEffectHook = () => {
+      onMount();
+      return () => {
+        onUnmount();
+      };
+    };
+
+    useEffect(useEffectHook);
+    return [channel, ably];
+  }
+  return [null, null];
 }

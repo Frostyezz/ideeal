@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import Link from "next/link";
 
-import { ChatDotsFill, SendFill } from "react-bootstrap-icons";
+import { SendFill } from "react-bootstrap-icons";
 
 import Message from "./Message";
 
@@ -12,22 +12,12 @@ import axios from "axios";
 import { useChannel } from "../hooks/useChannel";
 
 const Chat = ({ recipient, chat, user }) => {
-  if (!recipient)
-    return (
-      <div className="w-full h-full my-5 md:my-0 flex flex-col justify-center items-center">
-        <ChatDotsFill className="text-blue text-9xl mb-5" />
-        <h1 className="text-center">
-          Deschide o conversație pentru a trimite mesaje.
-        </h1>
-      </div>
-    );
-
-  const [messages, setMessages] = useState(chat.messages);
+  const [messages, setMessages] = useState(chat?.messages);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
   let messageEnd = null;
 
-  const [channel, ably] = useChannel(chat._id, (msg) => {
+  const [channel, ably] = useChannel(chat?._id, (msg) => {
     setMessages([...messages, msg.data]);
   });
 

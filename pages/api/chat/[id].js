@@ -2,8 +2,6 @@ import dbConnect from "../../../util/dbConnect";
 import Account from "../../../models/Account";
 import Chat from "../../../models/Chat";
 
-import Pusher from "pusher";
-
 export default async function handler(req, res) {
   await dbConnect();
   const { id } = req.query;
