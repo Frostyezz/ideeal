@@ -9,58 +9,9 @@ import Message from "./Message";
 import { Avatar, Input, Button } from "@chakra-ui/react";
 import axios from "axios";
 
-import Pusher from "pusher-js";
+import { useChannel } from "../hooks/useChannel";
 
-const Chat = ({ recipient, user }) => {
-  const [chat, setChat] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (!recipient) return;
-    axios
-      .post("/api/chat", { sender: user._id, recipient: recipient._id })
-      .then(({ data }) => {
-        if (data.status === "SUCCESS") {
-          setChat(data.chat);
-
-          const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY, {
-            cluster: "eu",
-          });
-          const channel = pusher.subscribe(data?.chat._id);
-          channel.bind("message", function (data) {
-            const message = JSON.parse(data.message);
-            const messages = chat.messages;
-            messages.push(message);
-            setChat({
-              ...chat,
-              messages,
-            });
-          });
-        }
-      });
-  }, [recipient]);
-
-  useEffect(() => {
-    if (chat && "messages" in chat) {
-    }
-  }, [chat]);
-
-  const onSend = async (e) => {
-    e.preventDefault();
-    const message = {
-      authorID: user._id,
-      text: e.target.text.value,
-    };
-    setLoading(true);
-    const { data } = await axios.patch(`/api/chat/${chat._id}`, { message });
-    setLoading(false);
-    if (data.status === "SUCCESS") {
-      document.getElementById("text").reset();
-      inputRef?.current?.focus();
-    }
-  };
-
+const Chat = ({ recipient, chat, user }) => {
   if (!recipient)
     return (
       <div className="w-full h-full my-5 md:my-0 flex flex-col justify-center items-center">
@@ -70,6 +21,35 @@ const Chat = ({ recipient, user }) => {
         </h1>
       </div>
     );
+
+  const [messages, setMessages] = useState(chat.messages);
+  const [loading, setLoading] = useState(false);
+  const inputRef = useRef(null);
+  let messageEnd = null;
+
+  const [channel, ably] = useChannel(chat._id, (msg) => {
+    setMessages([...messages, msg.data]);
+  });
+
+  const onSend = async (e) => {
+    e.preventDefault();
+    const message = {
+      authorID: user._id,
+      text: e.target.text.value.trim(),
+    };
+    setLoading(true);
+    const { data } = await axios.patch(`/api/chat/${chat._id}`, { message });
+    setLoading(false);
+    if (data.status === "SUCCESS") {
+      channel.publish({ name: "chat-message", data: message });
+      document.getElementById("text").reset();
+      inputRef?.current?.focus();
+    }
+  };
+
+  useEffect(() => {
+    messageEnd.scrollIntoView({ behaviour: "smooth" });
+  });
 
   return (
     <div className="w-full h-full flex flex-col animate__animated animate__fadeIn">
@@ -85,7 +65,7 @@ const Chat = ({ recipient, user }) => {
         </Link>
       </div>
       <div className="overflow-y-auto no-scrollbar h-96 p-3 w-full">
-        {chat?.messages.map((message, i) => (
+        {messages.map((message, i) => (
           <Message
             key={i}
             isUser={message.authorID === user._id}
@@ -94,6 +74,11 @@ const Chat = ({ recipient, user }) => {
             message={message.text}
           />
         ))}
+        <div
+          ref={(element) => {
+            messageEnd = element;
+          }}
+        />
       </div>
       <form
         id="text"
@@ -107,7 +92,7 @@ const Chat = ({ recipient, user }) => {
           placeholder="Scrie un mesaj..."
           name="text"
         />
-        <Button colorScheme="blue" type="submit">
+        <Button isLoading={loading} colorScheme="blue" type="submit">
           <SendFill />
         </Button>
       </form>

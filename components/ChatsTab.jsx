@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Link from "next/link";
 
@@ -10,12 +10,28 @@ import {
   AlertTitle,
   Button,
   Tooltip,
-  useToast,
 } from "@chakra-ui/react";
 
 import { ChatDotsFill } from "react-bootstrap-icons";
+import axios from "axios";
 
-const ChatsTab = ({ friends, setChat }) => {
+const ChatsTab = ({ friends, setChat, user }) => {
+  const [loading, setLoading] = useState(false);
+
+  const openChat = async (friend) => {
+    setLoading(true);
+    const { data } = await axios.post("/api/chat", {
+      sender: user._id,
+      recipient: friend._id,
+    });
+    setLoading(false);
+    if (data.status === "SUCCESS")
+      setChat({
+        ...data.chat,
+        recipient: friend,
+      });
+  };
+
   if (!friends)
     return (
       <div className="md:h-96 flex items-center justify-center">
@@ -56,7 +72,8 @@ const ChatsTab = ({ friends, setChat }) => {
             color="black"
           >
             <Button
-              onClick={() => setChat(friend)}
+              isLoading={loading}
+              onClick={() => openChat(friend)}
               colorScheme="blue"
               size="sm"
               className="ml-auto"

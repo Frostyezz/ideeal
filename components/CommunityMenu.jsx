@@ -64,7 +64,7 @@ const CommunityMenu = ({ user, setChat }) => {
         </TabList>
         <TabPanels>
           <TabPanel className="px-0">
-            <ChatsTab setChat={setChat} friends={data?.friends} />
+            <ChatsTab user={user} setChat={setChat} friends={data?.friends} />
           </TabPanel>
           <TabPanel className="px-0 ">
             <FriendsTab id={user._id} friends={data?.friends} />
