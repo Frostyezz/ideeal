@@ -1,9 +1,10 @@
 import Ably from "ably/promises";
 import { useEffect } from "react";
 
-const authUrl = !process.env.NEXT_PUBLIC_VERCEL_URL
-  ? "http://localhost:3000/api/createTokenRequest"
-  : `https://${process.env.VERCEL_URL}/api/createTokenRequest`;
+const authUrl =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000/api/createTokenRequest"
+    : `https://${process.env.VERCEL_URL}/api/createTokenRequest`;
 
 const ably = new Ably.Realtime.Promise({
   authUrl,
