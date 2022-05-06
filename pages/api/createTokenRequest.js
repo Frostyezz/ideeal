@@ -5,5 +5,6 @@ export default async function handler(req, res) {
   const tokenRequestData = await client.auth.createTokenRequest({
     clientId: "ideero",
   });
+  res.setHeader("content-type", "application/json");
   res.status(200).json(tokenRequestData);
 }
