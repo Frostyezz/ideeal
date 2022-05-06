@@ -1,7 +1,7 @@
 import Ably from "ably/promises";
 import { useEffect } from "react";
 
-const authUrl = !process.env.VERCEL_URL
+const authUrl = !process.env.NEXT_PUBLIC_VERCEL_URL
   ? "http://localhost:3000/api/createTokenRequest"
   : `https://${process.env.VERCEL_URL}/api/createTokenRequest`;
 
