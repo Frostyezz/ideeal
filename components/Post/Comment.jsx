@@ -103,14 +103,15 @@ const Comment = ({ comment, id }) => {
           </div>
           <div className="mt-2 flex flex-row">
             <ShowMoreText
-              lines={2}
+              lines={1}
               more="Mai mult"
               less="Mai puțin"
               anchorClass="underline"
               expanded={false}
               truncatedEndingComponent={"... "}
+              className="w-full"
             >
-              <p>{comment.content}</p>
+              {comment.content}
             </ShowMoreText>
           </div>
           {user && (
