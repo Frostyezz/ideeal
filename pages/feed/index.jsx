@@ -26,6 +26,7 @@ const Feed = ({ initialPosts }) => {
     title: null,
     upvotes: null,
     modified: false,
+    time: null,
     date: {
       from: null,
       to: null,
@@ -57,6 +58,21 @@ const Feed = ({ initialPosts }) => {
         if (sort.upvotes === "ascending")
           posts.sort((a, b) => a.upvoters.length - b.upvoters.length);
         else posts.sort((a, b) => b.upvoters.length - a.upvoters.length);
+      }
+      if (sort.time) {
+        if (sort.time === "newest") {
+          posts.sort(function (a, b) {
+            return (
+              new Date(b.postedAt).getTime() - new Date(a.postedAt).getTime()
+            );
+          });
+        } else {
+          posts.sort(function (a, b) {
+            return (
+              new Date(a.postedAt).getTime() - new Date(b.postedAt).getTime()
+            );
+          });
+        }
       }
       if (sort.date.from && sort.date.to) {
         if (+sort.date.from === +sort.date.to) {

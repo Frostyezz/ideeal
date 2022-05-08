@@ -20,7 +20,7 @@ const SortPosts = ({ sortPosts, resetFilters }) => {
 
   const applyFilters = (e) => {
     e.preventDefault();
-    const { name, title, upvotes } = e.target;
+    const { name, title, upvotes, time } = e.target;
     if (date.from?.getTime() > date.to?.getTime()) {
       toast({
         title: `Intervalul de timp nu este corect!`,
@@ -36,12 +36,13 @@ const SortPosts = ({ sortPosts, resetFilters }) => {
       upvotes: upvotes.value ? upvotes.value : null,
       modified: true,
       date: date.from && date.to ? date : { from: null, to: null },
+      time: time.value ? time.value : null,
     };
     sortPosts(filters);
   };
   return (
     <form id="sort" onSubmit={(e) => applyFilters(e)} className="flex flex-col">
-      <h1 className="font-bold text-lg text-center mb-5">Sortează după:</h1>
+      <h1 className="font-bold text-lg text-center mb-5">Filtrează după:</h1>
       <div className="flex flex-row">
         <div className="flex flex-col mr-1 w-full">
           <FormLabel className="my-0" htmlFor="name">
@@ -68,9 +69,19 @@ const SortPosts = ({ sortPosts, resetFilters }) => {
         <option value="ascending">Crescător</option>
         <option value="descending">Descrescător</option>
       </Select>
-      <FormLabel className="my-0" htmlFor="votes">
-        Interval de timp
+      <FormLabel className="my-0" htmlFor="time">
+        Timp
       </FormLabel>
+      <Select
+        name="time"
+        id="time"
+        className="border-blue mb-1"
+        placeholder="Alege o opțiune"
+      >
+        <option value="newest">Cele mai noi</option>
+        <option value="oldest">Cele mai vechi</option>
+      </Select>
+      <FormLabel className="my-0">Interval de timp</FormLabel>
       <div className="flex flex row">
         <DatePicker
           locale="ro"

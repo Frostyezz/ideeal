@@ -36,7 +36,7 @@ const FeedOptions = ({ sortPosts, resetFilters, create }) => {
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="center">
-                Sortează postările
+                Filtrează postările
               </Box>
               <AccordionIcon />
             </AccordionButton>
