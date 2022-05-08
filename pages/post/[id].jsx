@@ -12,6 +12,8 @@ import FavoriteButton from "../../components/Post/FavoriteButton";
 import VoteButton from "../../components/Post/VoteButton";
 import NotFound from "../404";
 
+import { ButtonGroup } from "@chakra-ui/react";
+
 import { UserContext } from "../../contexts/userContext";
 
 import { Lightbox } from "react-modal-image";
@@ -74,17 +76,19 @@ const PostPage = ({ post }) => {
             </div>
             {user && (
               <div className="flex justify-evenly w-1/2 mx-auto flex-wrap">
-                <VoteButton
-                  id={post?._id}
-                  user={user?._id}
-                  upvoters={data ? data.stats?.upvoters : []}
-                />
-                <ShareButton id={post._id} />
-                <FavoriteButton
-                  id={post?._id}
-                  user={user?._id}
-                  favorites={data ? data.stats?.favorites : []}
-                />
+                <ButtonGroup size="md">
+                  <VoteButton
+                    id={post?._id}
+                    user={user?._id}
+                    upvoters={data ? data.stats?.upvoters : []}
+                  />
+                  <ShareButton id={post._id} />
+                  <FavoriteButton
+                    id={post?._id}
+                    user={user?._id}
+                    favorites={data ? data.stats?.favorites : []}
+                  />
+                </ButtonGroup>
               </div>
             )}
 

@@ -10,7 +10,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
 
-import { Button, Tooltip } from "@chakra-ui/react";
+import { Button, ButtonGroup, Tooltip } from "@chakra-ui/react";
 
 import PostBody from "./PostBody";
 import ShareButton from "./ShareButton";
@@ -69,26 +69,28 @@ const Post = ({ post }) => {
               </div>
             )}
             <div className="flex justify-evenly w-full md:w-1/2 mx-auto flex-wrap">
-              <VoteButton
-                id={post?._id}
-                user={user?._id}
-                upvoters={data ? data?.stats?.upvoters : []}
-              />
-              <Tooltip hasArrow label="Comentarii" bg="white" color="black">
-                <Button
-                  colorScheme="gray"
-                  className="my-2"
-                  onClick={() => router.push(`/post/${post._id}`)}
-                >
-                  <ChatLeftDotsFill />
-                </Button>
-              </Tooltip>
-              <ShareButton id={post._id} />
-              <FavoriteButton
-                id={post?._id}
-                user={user?._id}
-                favorites={data ? data.stats?.favorites : []}
-              />
+              <ButtonGroup size="md">
+                <VoteButton
+                  id={post?._id}
+                  user={user?._id}
+                  upvoters={data ? data?.stats?.upvoters : []}
+                />
+                <Tooltip hasArrow label="Comentarii" bg="white" color="black">
+                  <Button
+                    colorScheme="gray"
+                    className="my-2"
+                    onClick={() => router.push(`/post/${post._id}`)}
+                  >
+                    <ChatLeftDotsFill />
+                  </Button>
+                </Tooltip>
+                <ShareButton id={post._id} />
+                <FavoriteButton
+                  id={post?._id}
+                  user={user?._id}
+                  favorites={data ? data.stats?.favorites : []}
+                />
+              </ButtonGroup>
             </div>
           </div>
         </li>

@@ -29,7 +29,11 @@ const Message = ({ isUser, user, recipient, message }) => {
         bg="white"
         color="black"
       >
-        <p className="rounded-xl bg-blue shadow p-2 md:max-w-xs max-mobile">
+        <p
+          className={`${
+            isUser ? "bg-orange text-white" : "bg-blue"
+          } rounded-xl shadow p-2 md:max-w-xs max-mobile`}
+        >
           {message.text}
         </p>
       </Tooltip>
