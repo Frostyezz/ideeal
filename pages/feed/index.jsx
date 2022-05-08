@@ -108,6 +108,7 @@ const Feed = ({ initialPosts }) => {
               title: null,
               upvotes: null,
               modified: false,
+              time: null,
               date: {
                 from: null,
                 to: null,
@@ -122,12 +123,14 @@ const Feed = ({ initialPosts }) => {
             ))}
           </ul>
         ) : (
-          <div className="w-full h-screen flex flex-col justify-center items-center">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center items-center">
             <ExclamationTriangleFill className="text-9xl text-orange" />
-            <h1 className="text-3xl font-bold">Nu există postări!</h1>
+            <h1 className="text-3xl font-bold text-center">
+              Nu există postări!
+            </h1>
             {sort.modified && (
               <>
-                <span className="my-2">
+                <span className="my-2 text-center">
                   Se pare că nicio postare nu respectă filtrele alese.
                 </span>
                 <Button
@@ -137,6 +140,7 @@ const Feed = ({ initialPosts }) => {
                       title: null,
                       upvotes: null,
                       modified: false,
+                      time: null,
                       date: {
                         from: null,
                         to: null,
