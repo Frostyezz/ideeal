@@ -19,14 +19,6 @@
 - Ably integration for real-time messaging
 - Middleware route protection
 
-## Technologies used
-
-- Next.js
-- MongoDB
-- TailwindCSS
-- SCSS
-- Chakra-UI
-- SWR
-- Jose
-- Sendgrid
-- Ably
+<p align="center">
+    <img src="https://res.cloudinary.com/diuccggyo/image/upload/v1652020040/fiicode/ideero_roles_o2vphm.png" alt="Ideero role hierarchy and responsibilities"/>
+</p>
