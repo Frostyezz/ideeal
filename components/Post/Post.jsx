@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import axios from "axios";
 import useSWR from "swr";
 
+import { Lightbox } from "react-modal-image";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -23,6 +24,7 @@ import { ChatLeftDotsFill } from "react-bootstrap-icons";
 import { useRouter } from "next/router";
 
 const Post = ({ post }) => {
+  const [url, setUrl] = useState(null);
   const router = useRouter();
   const { user } = useContext(UserContext);
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
@@ -50,9 +52,11 @@ const Post = ({ post }) => {
                       {file.includes("/image/") ? (
                         <Image
                           priority
+                          className="cursor-pointer"
                           src={file}
                           layout="fill"
                           objectFit="cover"
+                          onClick={() => setUrl(file)}
                         />
                       ) : (
                         <video controls className="h-full w-full object-cover">
@@ -88,6 +92,14 @@ const Post = ({ post }) => {
             </div>
           </div>
         </li>
+      )}
+      {url && (
+        <Lightbox
+          large={url}
+          onClose={() => setUrl(null)}
+          hideDownload
+          hideZoom="false"
+        />
       )}
     </>
   );

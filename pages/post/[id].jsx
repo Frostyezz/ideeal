@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import Image from "next/image";
 
@@ -14,12 +14,15 @@ import NotFound from "../404";
 
 import { UserContext } from "../../contexts/userContext";
 
+import { Lightbox } from "react-modal-image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper";
 
 const PostPage = ({ post }) => {
+  const [url, setUrl] = useState(null);
+
   const fetcher = async (url) => await axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/post/stats/${post._id}`, fetcher, {
     refreshInterval: 60000,
@@ -49,9 +52,11 @@ const PostPage = ({ post }) => {
                     {file.includes("/image/") ? (
                       <Image
                         priority
+                        className="cursor-pointer"
                         src={file}
                         layout="fill"
                         objectFit="cover"
+                        onClick={() => setUrl(file)}
                       />
                     ) : (
                       <video controls className="h-full w-full">
@@ -93,6 +98,14 @@ const PostPage = ({ post }) => {
         </div>
       ) : (
         <NotFound />
+      )}
+      {url && (
+        <Lightbox
+          large={url}
+          onClose={() => setUrl(null)}
+          hideDownload
+          hideZoom="false"
+        />
       )}
     </>
   );

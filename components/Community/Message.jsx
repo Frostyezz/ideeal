@@ -1,6 +1,9 @@
 import React from "react";
 
-import { Avatar } from "@chakra-ui/react";
+import { Avatar, Tooltip } from "@chakra-ui/react";
+
+import moment from "moment";
+import "moment/locale/ro";
 
 const Message = ({ isUser, user, recipient, message }) => {
   return (
@@ -19,9 +22,17 @@ const Message = ({ isUser, user, recipient, message }) => {
         src={isUser ? user.img : recipient.img}
         className="mx-2 my-auto"
       />
-      <p className="rounded-xl bg-blue shadow p-2 md:max-w-xs max-mobile">
-        {message}
-      </p>
+      <Tooltip
+        hasArrow
+        placement="top"
+        label={moment(message.sent).format("LLL")}
+        bg="white"
+        color="black"
+      >
+        <p className="rounded-xl bg-blue shadow p-2 md:max-w-xs max-mobile">
+          {message.text}
+        </p>
+      </Tooltip>
     </div>
   );
 };

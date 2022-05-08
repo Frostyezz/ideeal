@@ -62,7 +62,7 @@ const Chat = ({ recipient, chat, user }) => {
             isUser={message.authorID === user._id}
             user={user}
             recipient={recipient}
-            message={message.text}
+            message={message}
           />
         ))}
         <div
