@@ -37,6 +37,7 @@
 - TailwindCSS
 - SCSS
 - Chakra-UI
+- Jose
 - Sendgrid
 - Ably
 - Cloudinary
