@@ -8,6 +8,8 @@
 
 <br>
 
+Videoclipul de prezentare poate fi vizionat [aici](https://youtu.be/c4NFu_y82i8).
+
 ## Ce este IdeeRO?
 
 [IdeeRO](https://ideero.vercel.app/) este o aplicație web ce își propune sa facă auzită vocea cetățeanului. Accesul la această platformă se acordă doar prin verificarea dovezii domiciliului și prin verificarea adresei de email. 
